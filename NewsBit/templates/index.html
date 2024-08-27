@@ -1,0 +1,75 @@
+{% include 'partials/header.htm' %} 
+{% include "partials/blocks/navigation.htm" %}
+
+{%comment%}
+<!-- {% include 'header.htm' %} 
+@@include("{% static 'header.htm'%}")
+
+@@include("{% static 'blocks/navigation.htm'%}") -->
+{%endcomment%}
+
+
+<div class="py-30"></div>
+<!-- @@include('blocks/featured-slider.htm') -->
+{% include 'partials/blocks/featured-slider.htm' %} 
+ 
+
+<section class="block-wrapper">
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-8 col-md-12 col-sm-12 col-xs-12">
+				<!-- @@include('blocks/post-style-one.htm') -->
+				{% include 'partials/blocks/post-style-one.htm' %} 
+				
+				<div class="py-40"></div>  
+				{% include 'partials/blocks/post-style-two.htm' %} 
+				<!-- @@include('blocks/post-style-two.htm') -->
+			</div>
+			<div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
+				<div class="sidebar">
+				{% include 'partials/blocks/widget-social-share.htm' %} 
+				{% include 'partials/blocks/widget-popular-post.htm' %} 
+				{% include 'partials/blocks/widget-trending-posts.htm' %} 
+
+					<!-- @@include('blocks/widget-social-share.htm')
+					@@include('blocks/widget-popular-post.htm')
+					@@include('blocks/widget-trending-posts.htm') -->
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+<!-- @@include('blocks/post-style-four.htm') -->
+{% include 'partials/blocks/post-style-four.htm' %} 
+
+
+
+<section class="section-padding">
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-8 col-md-12 col-sm-12 col-xs-12">
+				<!-- @@include('blocks/all-posts.htm')
+				@@include('blocks/pagination.htm')				 -->
+				{% include 'partials/blocks/all-posts.htm' %} 
+				{% include 'partials/blocks/pagination.htm' %} 
+
+			</div>
+			<div class="col-lg-4 col-md-8 col-sm-12 col-xs-12">
+				<div class="sidebar sidebar-right">
+					<!-- @@include('blocks/widget-review.htm') -->
+					{% include 'partials/blocks/widget-review.htm' %} 
+
+				</div>
+			</div>
+		</div>
+	</div>
+</section>
+
+<div class="py-40"></div>
+
+<!-- @@include('blocks/footer.htm')
+
+@@include('footer.htm') -->
+
+{% include 'partials/footer.htm' %} 

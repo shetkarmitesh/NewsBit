@@ -1,0 +1,112 @@
+{% load static %}
+
+<section class="featured-posts">
+    <div class="container">
+        <div class="row no-gutters">
+            <!-- for loop start -->
+             {% with news|slice:":2" as first_group %}
+             {% for new in first_group %}
+            <!-- first element -->
+
+            <div class="col-md-6 col-xs-12 col-lg-4">
+                <div class="featured-slider mr-md-3 mr-lg-3">
+                    <div class="item" style="background-image:url('{{new.img.url}}')">
+                        <!-- {% static 'users/img/bg/name_of _image.png'%} -->
+                        <div class="post-content">
+
+                            <a href="#" class="post-cat bg-{{new.tagBackColor}}">{{new.tags}}</a>
+                            <h2 class="slider-post-title">
+                                <a href="{% url 'single-post' new.id %}">{{new.headline}}</a>
+                            </h2>
+                            <div class="post-meta mt-2">
+                                <span class="posted-time"><i class="fa fa-clock-o mr-2 text-danger"></i>{{new.get_time}}</span>
+                                <span class="post-author">
+                                    by
+                                    <a href="{% url 'author'%}">{{new.author}}</a>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- end first element -->
+            {% endfor %}
+            {% endwith %}
+            {%comment%}
+
+            <!-- <div class="col-md-6 col-xs-12 col-lg-4">
+                 <div class="featured-slider mr-lg-3">
+                    <div class="item" style="background-image:url('/static/images/news/img-2.jpg')">
+                        <div class="post-content">
+                            <a href="#" class="post-cat bg-danger">game</a>
+                            <h2 class="slider-post-title">
+                                <a href="{% url 'single-post' new.id %}">Call Of Duty: Black Ops 4 Releasing</a>
+                            </h2>
+                            <div class="post-meta mt-2">
+                                <span class="posted-time"><i class="fa fa-clock-o mr-2 text-danger"></i>19 hours ago</span>
+                                <span class="post-author">
+                                    <span> by </span>
+                                    <a href="{% url 'author'%}">Rodinho Summon</a>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div> -->
+            {%endcomment%}
+
+            
+            <div class="col-md-12 col-xs-12 col-sm-12 col-lg-4">
+                <div class="row mt-3 mt-lg-0">
+
+                    {% with news|slice:"2:4" as second_group %}
+                    {% for new in second_group %}
+                    <!-- second element -->
+                    <div class="col-lg-12 col-xs-12 col-sm-6 col-md-6">
+                        <div class="post-featured-style" style="background-image:url('{{new.img.url}}')">
+                            <div class="post-content">
+                                <a href="#" class="post-cat bg-{{new.tagBackColor}}">{{new.tags}}</a>
+                                <h2 class="post-title">
+                                    <a href="{% url 'single-post' new.id %}">{{new.headline}}</a>
+                                </h2>
+                                <div class="post-meta mt-2">
+                                    <span class="posted-time"><i class="fa fa-clock-o mr-2 text-danger"></i>{{new.get_time}}</span>
+                                    <span class="post-author">
+                                        <span> by </span>
+                                        <a href="{% url 'author'%}">{{new.author}}</a>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- end second element -->
+                    {%comment%}
+                    <!-- <div class="col-lg-12 col-xs-12 col-sm-6 col-md-6">
+                        <div class="post-featured-style" style="background-image:url(static/images/news/news-04.jpg)">
+                            <div class="post-content">
+                                <a href="#" class="post-cat bg-info">travel</a>
+                                <h2 class="post-title">
+                                    <a href="{% url 'single-post' new.id %}">Call Of Duty: Black Ops 4 Releasing</a>
+                                </h2>
+                                <div class="post-meta mt-2">
+                                    <span class="posted-time"><i class="fa fa-clock-o mr-2 text-danger"></i>19 hours ago</span>
+                                    <span class="post-author">
+                                        <span> by </span>
+                                        <a href="{% url 'author'%}">Rodinho Summon</a>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div> -->
+                    {%endcomment%}
+                    
+                    {% endfor %}
+                    {% endwith %}
+
+                </div>
+            </div>
+            <!-- end for loop -->
+
+        </div>
+    </div>
+</section>

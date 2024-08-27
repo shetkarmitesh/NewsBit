@@ -1,0 +1,7 @@
+create database NewsBitDatabase;
+use NewsBitDatabase;
+
+show tables;
+
+select * from auth_user;
+select * from newsbitapp_news;

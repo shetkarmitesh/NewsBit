@@ -1,0 +1,61 @@
+{% load static %}
+<div class="all-news-block">
+    <h3 class="news-title">
+        <span>Latest Articles</span>
+    </h3>
+    <div class="all-news">
+        <div class="row">
+            <div class="col-lg-6 col-md-6">
+                <div class="post-block-wrapper post-float-half clearfix">
+                    <div class="post-thumbnail">
+                        <a href="{% url 'single-post' 1 %}">
+                            <img class="img-fluid" src="{% static 'images/news/news-01.jpg'%}" alt="post-thumbnail"/>
+                        </a>
+                    </div>
+                    <div class="post-content">
+                        <a class="post-category" href="{% url 'post-category-2'%}">Google</a>
+                        <h2 class="post-title mt-3">
+                            <a href="{% url 'single-post' 1 %}">Ex-Googler warns coding bootcamps are lacking</a>
+                        </h2>
+                        <div class="post-meta">
+                            <span class="posted-time">an hour ago</span>
+                            <span class="post-author">by
+                                <a href="{% url 'author'%}">John Snow</a>
+                            </span>
+                        </div>
+                        <p>
+                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel eaque, aliquid accusamus 
+                            soluta!...
+                        </p>
+                    </div>
+                </div>
+            </div>
+                
+            <div class="col-lg-6 col-md-6">
+                <div class="post-block-wrapper post-float-half clearfix">
+                   <div class="post-thumbnail">
+                        <a href="{% url 'single-post' 1 %}">
+                            <img class="img-fluid" src="{% static 'images/news/news-12.jpg'%}" alt="post-thumbnail"/>
+                        </a>
+                    </div>
+                    <div class="post-content">
+                        <a class="post-category" href="{% url 'post-category-2'%}">Health</a>
+                        <h2 class="post-title mt-3">
+                            <a href="{% url 'single-post' 1 %}">Today Is the Day Most People Quit Their New Year's Party</a>
+                        </h2>
+                        <div class="post-meta">
+                            <span class="posted-time">4 hours ago</span>
+                            <span class="post-author">by
+                                <a href="{% url 'author'%}">Rimmon Ronnick</a>
+                            </span>
+                        </div>
+                        <p>
+                            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Corporis blanditiis hic 
+                            cumque excepturi...
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

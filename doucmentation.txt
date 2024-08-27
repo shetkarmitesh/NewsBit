@@ -1,0 +1,336 @@
+
+  we are  creating virtual environment for this project so we can isolate python installs , and pip packages and also used to manage packages allow developers to control software dependencies in Python code.
+
+  Install virtual environment using : pip install virtualenvwrapper-win
+
+  creating virtual environment : python -m venv myenv
+
+  activating the virtaul environment : .\myenv\Scripts\activate
+
+  We are done with our virtaul environment now we have to setup django
+
+  instll django : pip install Django
+
+  creating project  : django-admin startproject NewsBit 
+ project has been created move to the project : cd NewsBit
+
+ lets test the project is running or not using : python manage.py runserver
+
+ creating app : python manage.py startapp NewsBitApp
+
+ we have to mapped the urls in app for that we have to create the urls.py
+
+ In urls.py file we haved define the home page as index.html 
+ the we have to define the index function in views to render or display message 
+
+ but if we want to go home page we have to define in project urls also about the new app furniapp :  path('', include ("NewsBitApp.urls")), 
+ for that we have imported include along with path
+
+ and the website is rendering to the index page but it is not rendering because we haved to define in settings.py file the template directory
+'DIRS': [os.path.join(BASE_DIR,'templates')],
+
+ now we have to link the css and other static files 
+ 
+STATICFILES_DIRS=[
+    os.path.join(BASE_DIR,'static')
+]
+STATIC_ROOT = os.path.join(BASE_DIR,'assets')
+
+now create folder static and paste all folder like css js
+
+run command to : python manage.py collectstatic
+
+now we are ready with the css, js other static files but it doesnt affect the index.files because we have to make all the links static in index.html  using jinja format
+1. {% load static %}
+2. make the all the links static by : href="{% static 'favicon.png'%} "
+
+we are able to see the changes and mapped all the links
+
+for images : 
+        for img we should define : {% static "img/place" as baseUrl %}
+        static and path as baseUrl as variable
+        <img src="{{ baseUrl }}/{{ dest.img }}" alt="asfasdfasdfadf">
+
+mapped all the links as the static in each files 
+
+*****error*****
+in this project we have included all the neccessary files using include statement : {% include 'partials/header.htm' %} 
+in main index.html we haved included the header and footer using include statement
+
+ during the logo  
+ <img src="{% static 'images/logos/logo.png'%}" alt="logo"> we haved replaced the link with static 
+
+ features slider images were no accessible so from the below link we found the solution 
+https://simpleit.rocks/python/django/call-static-templatetag-for-background-image-in-css/
+
+******** mysql database register ***********
+
+Lets define the database 
+In settings.py file database secttion :
+
+        'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'furnitureDetails',
+        'USER': 'root',
+        'PASSWORD': 'zxcvbnm1234567890$',
+        'HOST':'localhost',
+        'PORT':'3306' 
+            }
+ 
+and download MySQLclient : pip install mysqlclient
+we have to declare our application name in settings.py : 
+       # defnine app
+    'NewsBitApp.apps.NewsbitappConfig',
+
+created meet with an error like cannot use ImageFeild because Pillow is not installed
+    pip install Pillow
+
+************ Register Login Logout ***************
+make action Register/login/logout , method as port mapped the urls 
+fetch details about user and requested user match the data and process the next step such as register , login ,logout
+
+
+****************News Model *************
+It is model which contain info about the news like headline , tags , description, images, etc
+
+passed the data to the index page 
+
+*************** Single Post ******************
+we are required to display the content in proper format as required for that we are using the ckeditor which provide such functionalties 
+Ckeditor is  rich text editor which enables writing content directly inside of web pages or online applications.
+
+-----------ckeditor setup -------------
+ Install and Set Up CKEditor : pip install django-ckeditor
+
+Add ckeditor and ckeditor_uploader to your INSTALLED_APPS in settings.py:
+      INSTALLED_APPS = [
+    ...
+    'ckeditor',
+    'ckeditor_uploader',
+    ...
+    ]
+  
+  Add CKEditor settings to settings.py:
+  CKEDITOR_UPLOAD_PATH = "uploads/"
+
+Include CKEditor URLs in your urls.py:
+    urlpatterns = [
+        ...
+        path('ckeditor/', include('ckeditor_uploader.urls')),
+        ...
+    ]
+
+
+
+adding more functionalities 
+
+# # # ck editor 5 custom paltet config
+customColorPalette = [
+        {
+            'color': 'hsl(4, 90%, 58%)',
+            'label': 'Red'
+        },
+        {
+            'color': 'hsl(340, 82%, 52%)',
+            'label': 'Pink'
+        },
+        {
+            'color': 'hsl(291, 64%, 42%)',
+            'label': 'Purple'
+        },
+        {
+            'color': 'hsl(262, 52%, 47%)',
+            'label': 'Deep Purple'
+        },
+        {
+            'color': 'hsl(231, 48%, 48%)',
+            'label': 'Indigo'
+        },
+        {
+            'color': 'hsl(207, 90%, 54%)',
+            'label': 'Blue'
+        },
+    ]
+# CKEDITOR_5_CUSTOM_CSS = 'path_to.css' # optional
+# CKEDITOR_5_FILE_STORAGE = "path_to_storage.CustomStorage" # optional
+CKEDITOR_CONFIGS  = {
+    # 'default': {
+    #     'toolbar': ['heading', '|', 'bold', 'italic', 'link',
+    #                 'bulletedList', 'numberedList', 'blockQuote', 'imageUpload', ],
+
+    # }
+    'default': {
+        'toolbar_Full': [
+            ['Styles', 'Format', 'Bold', 'Italic', 'Underline', 'Strike', 'SpellChecker', 'Undo', 'Redo'],
+            ['Link', 'Unlink', 'Anchor'],
+            ['Image', 'Flash', 'Table', 'HorizontalRule',],
+            ['TextColor', 'BGColor'],
+            ['Smiley', 'SpecialChar'], ['Source'],
+            ['JustifyLeft','JustifyCenter','JustifyRight','JustifyBlock'],
+            ['NumberedList','BulletedList'],
+            ['Indent','Outdent'],
+            ['Maximize'],
+        ],
+        'extraPlugins': 'justify,liststyle,indent','toolbar_YourCustomToolbarConfig': [
+            {'name': 'document', 'items': ['Source', '-', 'Save', 'NewPage', 'Preview', 'Print', '-', 'Templates']},
+            {'name': 'clipboard', 'items': ['Cut', 'Copy', 'Paste', 'PasteText', 'PasteFromWord', '-', 'Undo', 'Redo']},
+            {'name': 'editing', 'items': ['Find', 'Replace', '-', 'SelectAll']},
+            {'name': 'forms',
+             'items': ['Form', 'Checkbox', 'Radio', 'TextField', 'Textarea', 'Select', 'Button', 'ImageButton',
+                       'HiddenField']},
+            '/',
+            {'name': 'basicstyles',
+             'items': ['Bold', 'Italic', 'Underline', 'Strike', 'Subscript', 'Superscript', '-', 'RemoveFormat']},
+            {'name': 'paragraph',
+             'items': ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent', '-', 'Blockquote', 'CreateDiv', '-',
+                       'JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock', '-', 'BidiLtr', 'BidiRtl',
+                       'Language']},
+            {'name': 'links', 'items': ['Link', 'Unlink', 'Anchor']},
+            {'name': 'insert',
+             'items': ['Image', 'Flash', 'Table', 'HorizontalRule', 'Smiley', 'SpecialChar', 'PageBreak', 'Iframe']},
+            '/',
+            {'name': 'styles', 'items': ['Styles', 'Format', 'Font', 'FontSize']},
+            {'name': 'colors', 'items': ['TextColor', 'BGColor']},
+            {'name': 'tools', 'items': ['Maximize', 'ShowBlocks']},
+            {'name': 'about', 'items': ['About']},
+            '/',  # put this to force next toolbar on new line
+            {'name': 'yourcustomtools', 'items': [
+                # put the name of your editor.ui.addButton here
+                'Preview',
+                'Maximize',
+
+            ]},
+        ],
+        'toolbar': 'YourCustomToolbarConfig',  # put selected toolbar config here
+        # 'toolbarGroups': [{ 'name': 'document', 'groups': [ 'mode', 'document', 'doctools' ] }],
+        # 'height': 291,
+        # 'width': '100%',
+        # 'filebrowserWindowHeight': 725,
+        # 'filebrowserWindowWidth': 940,
+        # 'toolbarCanCollapse': True,
+        # 'mathJaxLib': '//cdn.mathjax.org/mathjax/2.2-latest/MathJax.js?config=TeX-AMS_HTML',
+        'tabSpaces': 4,
+        'extraPlugins': ','.join([
+            'uploadimage', # the upload image feature
+            # your extra plugins here
+            'div',
+            'autolink',
+            'autoembed',
+            'embedsemantic',
+            'autogrow',
+            # 'devtools',
+            'widget',
+            'lineutils',
+            'clipboard',
+            'dialog',
+            'dialogui',
+            'elementspath',
+            
+        ]),
+    },
+    'extends': {
+        'blockToolbar': [
+            'paragraph', 'heading1', 'heading2', 'heading3',
+            '|',
+            'bulletedList', 'numberedList',
+            '|',
+            'blockQuote',
+        ],
+        'toolbar': ['heading', '|', 'outdent', 'indent', '|', 'bold', 'italic', 'link', 'underline', 'strikethrough',
+        'code','subscript', 'superscript', 'highlight', '|', 'codeBlock', 'sourceEditing', 'insertImage',
+                    'bulletedList', 'numberedList', 'todoList', '|',  'blockQuote', 'imageUpload', '|',
+                    'fontSize', 'fontFamily', 'fontColor', 'fontBackgroundColor', 'mediaEmbed', 'removeFormat',
+                    'insertTable',],
+        'image': {
+            'toolbar': ['imageTextAlternative', '|', 'imageStyle:alignLeft', 
+                        'imageStyle:alignRight', 'imageStyle:alignCenter', 'imageStyle:side',  '|'],
+            'styles': [
+                'full',
+                'side',
+                'alignLeft',
+                'alignRight',
+                'alignCenter',
+            ]
+
+        },
+        'table': {
+            'contentToolbar': [ 'tableColumn', 'tableRow', 'mergeTableCells',
+            'tableProperties', 'tableCellProperties' ],
+            'tableProperties': {
+                'borderColors': customColorPalette,
+                'backgroundColors': customColorPalette
+            },
+            'tableCellProperties': {
+                'borderColors': customColorPalette,
+                'backgroundColors': customColorPalette
+            }
+        },
+        'heading' : {
+            'options': [
+                { 'model': 'paragraph', 'title': 'Paragraph', 'class': 'ck-heading_paragraph' },
+                { 'model': 'heading1', 'view': 'h1', 'title': 'Heading 1', 'class': 'ck-heading_heading1' },
+                { 'model': 'heading2', 'view': 'h2', 'title': 'Heading 2', 'class': 'ck-heading_heading2' },
+                { 'model': 'heading3', 'view': 'h3', 'title': 'Heading 3', 'class': 'ck-heading_heading3' }
+            ]
+        }
+    },
+    'list': {
+        'properties': {
+            'styles': 'true',
+            'startIndex': 'true',
+            'reversed': 'true',
+        }
+    }
+}
+
+in model: 
+import from ckeditor.fields import RichTextField
+from ckeditor_uploader.fields import RichTextUploadingField
+    
+object : description1 = RichTextUploadingField(null=True,blank=True)
+
+In templates to display the {{news.description1|safe}}  
+
+got from the stackoverflow
+
+now we are ablle to create the dynamic contain as per required
+
+
+------------- Time Ago -------------
+our article requires the timeline like 2 hours ago etc for that we have inbuild methods we just have to mention in files 
+in settings.py : 
+    INSTALLED_APPS = [
+        'django.contrib.humanize',
+    ]
+
+To store the current indian time we change the zone as asian/kolkata
+DATABASES = {
+    
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'NewsBitDatabase',
+        'USER': 'root',
+        'PASSWORD': 'root',
+        'HOST':'localhost',
+        'PORT':'3306' ,
+        'TIME_ZONE': 'Asia/Kolkata'
+            }
+}
+
+now in models we create the funtion get_time which provide naturaltime 
+from django.contrib.humanize.templatetags import humanize
+in class
+    datetime = models.DateTimeField(auto_now_add=True)
+
+    def get_time(self):
+            return humanize.naturaltime(self.datetime)
+
+
+
+
+
+
+
+1.i want the slider for tags with multiple tags selection
+2.assign color to the tags like danger, info for background color
+user profile management
