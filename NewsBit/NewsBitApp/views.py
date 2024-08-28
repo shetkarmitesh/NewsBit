@@ -1,15 +1,15 @@
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from django.contrib.auth.models import User,auth
-from .models import news
+from .models import news,Author,Comment
 from django.contrib import messages
+from django.db.models import Q
 
 # Create your views here.
 
 def index(request):
     new = news.objects.all()[:4] 
-    for i in new:
-        print(i.get_time(),"     hii")
+    
     return render(request,'index.html',{'news':new})
 
 
@@ -20,8 +20,12 @@ def about(request):
     return render(request,'about.html')
 def account(request):
     return render(request,'index.html')
-def author(request):
-    return render(request,'index.html')
+
+def author(request,author_id):
+    author_details = Author.objects.get(id=author_id)
+    print(author_details.id,author_details.first_name,"asdaaaasdadadadsa")
+    return render(request,'author.html',{'author_detail':author_details})
+
 def contact(request):
     return render(request,'index.html')
 def job_info(request):
@@ -99,4 +103,15 @@ def logout(request):
 
 def single_post(request,newsId):
     new = news.objects.get(id=newsId)
-    return render(request,'single-post.html',{'news':new})
+    parentComments = Comment.objects.all().filter(post_id = new.id,parent_comment_id=None)
+    subComments = Comment.objects.all().filter(post_id = new.id).filter(~Q(parent_comment_id=None)).order_by('parent_comment_id')
+    print(len(subComments),"p0000000000000000000000000")
+    for i in subComments :
+        print(i.author_id,i.author_name())
+    return render(request,'single-post.html',{'news':new,'parentComments':parentComments,'subComments':subComments})
+
+def postComment(request,news_id):
+    if request.method =="POST":
+        return redirect('/')
+
+    return render(request,"single-post.html")

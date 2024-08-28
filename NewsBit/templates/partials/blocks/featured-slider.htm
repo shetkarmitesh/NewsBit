@@ -22,7 +22,7 @@
                                 <span class="posted-time"><i class="fa fa-clock-o mr-2 text-danger"></i>{{new.get_time}}</span>
                                 <span class="post-author">
                                     by
-                                    <a href="{% url 'author'%}">{{new.author}}</a>
+                                    <a href="{% url 'author' new.author.id %}">{{new.author_fname}} {{new.author_lname}}</a>
                                 </span>
                             </div>
                         </div>
@@ -73,7 +73,7 @@
                                     <span class="posted-time"><i class="fa fa-clock-o mr-2 text-danger"></i>{{new.get_time}}</span>
                                     <span class="post-author">
                                         <span> by </span>
-                                        <a href="{% url 'author'%}">{{new.author}}</a>
+                                        <a href="{% url 'author' new.author.id %}">{{new.autor_fname}} {{new.autor_lname}}</a>
                                     </span>
                                 </div>
                             </div>

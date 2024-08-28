@@ -1,17 +1,24 @@
 {% load static %}
 <div class="author-block">
     <div class="author-thumb">
-        <img src="{% static 'images/news/author-02.jpg'%}" alt="author-image">
+        <img src="{{author_detail.img.url}} {{news.author.img.url}}" alt="author-image">
     </div>
     <div class="author-content">
-        <h3><a href="{% url 'author'%}">Lint Handson</a></h3>
-        <p>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Sit quod molestias delectus illum quisquam. 
-            Quasi iure perferendis suscipit officiis dicta!
+        <!-- ask what to do if the page hits from multiple url like now if the author require from single post and after click on author it comes from authors.html how to show data then -->
+        <h3><a 
+            {% if author_detail is not none %}
+            href="{% url 'author' author_detail.id  %}"
+            {%else%}
+            href="{% url 'author' news.author.id  %}"  
+            {% endif%} 
+            >{{author_detail.first_name}} {{news.author_fname}} {{author_detail.last_name}} {{news.author_lname}}</a></h3>
+        <p>{{author_detail.description}} {{news.author_desc}}
         </p>
-        
+        {{author_detail.description1}}
         <div class="authors-social">
             <a href="#">
                 <i class="fa fa-facebook"></i>
+
             </a>
             <a href="#">
                 <i class="fa fa-twitter"></i>

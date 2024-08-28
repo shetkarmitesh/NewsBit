@@ -327,7 +327,23 @@ in class
 
 
 
+****************** Author model *******************
+class Author(models.Model):
+    img = models.ImageField(upload_to='author')
+    first_name = models.CharField(max_length=100)
+    last_name = models.CharField(max_length=100)
+    description = models.CharField(max_length=250)
+    description1 = RichTextUploadingField(null=True,blank=True)
 
+now we faced the error while sending the author id to show the data 
+auhtor id is sending from two different place like from news single post and from specific author using id 
+
+that error is handled by using if statement in jinja :
+            {% if author_detail is not none %}
+                href="{% url 'author' author_detail.id  %}"
+            {%else%}
+                href="{% url 'author' news.author.id  %}"  
+            {% endif%} 
 
 
 
