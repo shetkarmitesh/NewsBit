@@ -148,3 +148,28 @@ jQuery(function($) {
 		return false;
 	});
 });
+
+// $(".comment-send").click('click',function () {
+	
+// 	var news_id =  $(this).closest('.comment-body').find(".news_id").val();
+// 	var author_id =  $(this).closest('.comment-body').find(".author_id").val();
+// 	var author_name=document.getElementById("author_name").textContent;
+// 	var content=document.getElementById("replyContent").value;
+// 	var parentComment_id= $(this).closest('.comment-body').find(".author_id").val();
+// 	var token = $('input[name = csrfmiddlewaretoken]').val();
+// 	$.ajax({
+// 		method :"POST",
+// 		url : "/postComment",
+// 		data : {
+// 			'news_id':news_id,
+// 			'author_id':author_id,
+// 			'author_name':author_name,
+// 			'content':content,
+// 			'parentComment_id':parentComment_id,
+// 			csrfmiddlewaretoken: token
+// 		},success : function(response){
+// 			location.reload();
+// 		}
+// 	});
+	
+// })

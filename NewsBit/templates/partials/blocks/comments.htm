@@ -1,7 +1,7 @@
 {% load static %}
 <div id="comments" class="comments-block block">
     <h3 class="news-title">
-        <span>02 Comments</span>
+        <span> Comments ({{parentComments.count}})</span>
     </h3>
     <ul class="all-comments">
         <li>
@@ -10,7 +10,7 @@
                 <img class="commented-person" alt="" src="{{comment.author_img.url}}">
                 <div class="comment-body">
                     <div class="meta-data">
-                        <span class="commented-person-name">{{comment.author_name}}</span>
+                        <span class="commented-person-name" >{{comment.author_name}} </span>
                         <span class="comment-hour d-block"><i class="fa fa-clock-o mr-2"></i>{{comment.get_time}}</span>
                     </div>
                     <div class="comment-content">
@@ -19,11 +19,28 @@
                         </p>
                     </div>
                     <div class="text-left">
-                        <a class="comment-reply" href="#"><i class="fa fa-reply"></i> Reply</a>
-                    </div>
+                        
+                        <a class="comment-reply" data-toggle="collapse" data-target="#collapseExample{{comment.id}}" aria-expanded="false" aria-controls="collapseExample{{comment.id}}" ><i class="fa fa-reply"></i> Reply</a>
+                        
+                        <div class="collapse" id="collapseExample{{comment.id}}">
+                            <div class="card card-body">
+                                <form action="/postComment" method="post">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="news_id" value="{{news.id}}" id="comment_id">
+                                    <input type="hidden" name="author_id" value="{{news.author_id}}" id="comment_id">
+                                    <input type="hidden" name="parentComment_id" value="{{comment.id}}" id="comment_id">
+                                    <div class="form-group">
+                                        <label for="comment">Post a reply </label>
+                                        <input type="text" class="form-control" name="content" placeholder="Enter comment here">
+                                        <button type="submit" class="btn btn-light">Submit</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
                 </div>
+               </div>
             </div>
-            
            
             {%for subcomment in subComments %}
                 {% if subcomment.parent_comment_id == comment.id %}
@@ -42,7 +59,23 @@
                                     </p>
                                 </div>
                                 <div class="text-left">
-                                    <a class="comment-reply" href="#"><i class="fa fa-reply"></i> Reply</a>
+                                    <a class="comment-reply" data-toggle="collapse" data-target="#collapseExample{{subcomment.id}}" aria-expanded="false" aria-controls="collapseExample{{subcomment.id}}" ><i class="fa fa-reply"></i> Reply</a>
+                       
+                                    <div class="collapse" id="collapseExample{{subcomment.id}}">
+                                        <div class="card card-body">
+                                            <form action="/postComment" method="post">
+                                                {% csrf_token %}
+                                                <input type="hidden" name="news_id" value="{{news.id}}" id="comment_id">
+                                                <input type="hidden" name="author_id" value="{{news.author_id}}" id="comment_id">
+                                                <input type="hidden" name="parentComment_id" value="{{subcomment.id}}" id="comment_id">
+                                                <div class="form-group">
+                                                    <label for="comment">Post a reply </label>
+                                                    <input type="text" class="form-control" name="content" placeholder="Enter comment here">
+                                                    <button type="submit" class="btn btn-light">Submit</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -51,28 +84,9 @@
                 {% endif %}
 
             {%endfor%}
+          
             {%endfor%}
-            {%comment%}
-            <div class="comment last">
-                <img class="commented-person" alt="" src="{% static 'images/news/author-03.jpg'%}">
-                <div class="comment-body">
-                    <div class="meta-data">
-                        <span class="commented-person-name">Vicky Fong</span>
-                        <span class="comment-hour d-block"><i class="fa fa-clock-o mr-2"></i>June 6, 2019 at 12:20 pm</span>
-                    </div>
-                    <div class="comment-content">
-                        <p>
-                            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Error, ipsa dolor exercitationem 
-                            culpa obcaecati illo veniam voluptatem perferendis hic nisi tempora omnis, mollitia unde doloribus.
-                        </p>
-                    </div>
-                    <div class="text-left">
-                        <a class="comment-reply" href="#"><i class="fa fa-reply"></i> Reply</a>
-                    </div>
-                </div>
-            </div>
-
-            {%endcomment%}
+           
         </li>
     </ul>
 </div>
@@ -80,18 +94,21 @@
 <div class="comment-form ">
     <h3 class="title-normal">Leave a Reply </h3>
     <p class="mb-4">Your email address will not be published. Required fields are marked *</p>
-    <form action="postComment" method="post">
+    <form action="/postComment" method="post">
         {% csrf_token %}
         <div class="row">
              <div class="col-md-12">
                 <div class="form-group">
-                    <textarea class="form-control required-field" id="message" placeholder="Messege" rows="8" required></textarea>
+                    <textarea class="form-control required-field" name="content" id="message" placeholder="Messege" rows="8" required></textarea>
                 </div>
             </div>
 
             <div class="col-md-4">
                 <div class="form-group">
-                    <input class="form-control" name="name" id="name" placeholder="Name" type="text" required>
+                    <input class="form-control" name="author_name"  id="name" placeholder="Name" type="text" value="{{news.author_name}} " required>
+                    <input class="form-control" name="news_id"  placeholder="Name" type="hidden"  value="{{news.id}}">
+                    <input class="form-control" name="author_id"  placeholder="Name" type="hidden"  value="{{news.author_id}}">
+                    <input class="form-control" name="parentComment_id"  placeholder="Name" type="hidden"  value="">
                 </div>
             </div>
             <div class="col-md-4">
@@ -99,11 +116,14 @@
                     <input class="form-control" name="email" id="email" placeholder="Email" type="email" required>
                 </div>
             </div>
+
+            {%comment%}
             <div class="col-md-4">
                 <div class="form-group">
-                    <input class="form-control" type="text" placeholder="Website" required>
+                    <input class="form-control" type="text" name = "website"placeholder="Website" required>
                 </div>
             </div>
+            {%endcomment%}
            
             <div class="col-md-12">
                 <button class="comments-btn btn btn-primary " type="submit">Post Comment</button>

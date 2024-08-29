@@ -23,7 +23,7 @@ def account(request):
 
 def author(request,author_id):
     author_details = Author.objects.get(id=author_id)
-    print(author_details.id,author_details.first_name,"asdaaaasdadadadsa")
+    # print(author_details.id,author_details.first_name,"asdaaaasdadadadsa")
     return render(request,'author.html',{'author_detail':author_details})
 
 def contact(request):
@@ -105,13 +105,27 @@ def single_post(request,newsId):
     new = news.objects.get(id=newsId)
     parentComments = Comment.objects.all().filter(post_id = new.id,parent_comment_id=None)
     subComments = Comment.objects.all().filter(post_id = new.id).filter(~Q(parent_comment_id=None)).order_by('parent_comment_id')
-    print(len(subComments),"p0000000000000000000000000")
-    for i in subComments :
-        print(i.author_id,i.author_name())
+    # print(len(subComments),"p0000000000000000000000000")
+    # for i in subComments :
+    #     print(i.author_id,i.author_name())
     return render(request,'single-post.html',{'news':new,'parentComments':parentComments,'subComments':subComments})
 
-def postComment(request,news_id):
+def postComment(request):
     if request.method =="POST":
-        return redirect('/')
+        
+        
+        news_id = request.POST['news_id']
+        author_id = request.POST['author_id']
+        # author_name = request.POST['author_name']
+        # email = request.POST['email']
+        content = request.POST['content']
+        parentComment_id = request.POST['parentComment_id']
+        if parentComment_id is not None :
+
+            comment = Comment.objects.create(post_id = news_id,author_id = author_id,content = content,user_id=request.user.id,parent_comment_id=parentComment_id )
+        else:
+            comment = Comment.objects.create(post_id = news_id,author_id = author_id,content = content,user_id=request.user.id )
+
+        return redirect('single-post',news_id)
 
     return render(request,"single-post.html")

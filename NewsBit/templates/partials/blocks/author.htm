@@ -8,10 +8,12 @@
         <h3><a 
             {% if author_detail is not none %}
             href="{% url 'author' author_detail.id  %}"
+            >{{author_detail.first_name}} {{author_detail.last_name}} </a></h3>
             {%else%}
             href="{% url 'author' news.author.id  %}"  
+            >{{news.author_name}} </a></h3>
             {% endif%} 
-            >{{author_detail.first_name}} {{news.author_fname}} {{author_detail.last_name}} {{news.author_lname}}</a></h3>
+            
         <p>{{author_detail.description}} {{news.author_desc}}
         </p>
         {{author_detail.description1}}

@@ -53,10 +53,10 @@ class news (models.Model):
     def get_time(self):
         return humanize.naturaltime(self.datetime)
 
-    def author_fname(self):
-        return self.author.first_name
-    def author_lname(self):
-        return self.author.last_name
+    def author_name(self):
+        return self.author.first_name +" "+self.author.last_name
+    # def author_lname(self):
+    #     return self.author.last_name
     def author_desc(self):
         return self.author.description
     def author_img(self):

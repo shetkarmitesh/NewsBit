@@ -40,5 +40,6 @@ urlpatterns = [
     path('terms', views.term,name="terms"),
     path('logout', views.logout,name="logout"),
     path('404', views.m404,name="404"),
-    path('single-post/<int:newsId>/postComment', views.postComment,name="postComment"),
+    # path('single-post/<int:news_id>/postComment', views.postComment,name="postComment"),
+    path('postComment', views.postComment,name="postComment"),
 ]

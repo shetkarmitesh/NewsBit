@@ -346,6 +346,109 @@ that error is handled by using if statement in jinja :
             {% endif%} 
 
 
+*************** Comments *********************
+created model for comment 
+
+class Comment(models.Model):
+    post = models.ForeignKey('news', on_delete=models.CASCADE, related_name='comments')
+    author = models.ForeignKey(Author, on_delete=models.CASCADE)
+    content = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    parent_comment = models.ForeignKey('self', null=True, blank=True, on_delete=models.CASCADE)
+    user = models.ForeignKey(User,on_delete=models.CASCADE)
+    def __str__(self):
+        return f"Comment by {self.author} on {self.post}"
+
+    # want to display user commented img for now just author img
+    def author_img(self): 
+        return self.author.img
+    def author_name(self):
+        return self.author.first_name+" "+self.author.last_name
+    def get_time(self):
+        return humanize.naturaltime(self.created_at)
+
+parent_comment is most important for mapping the comments serially 
+
+logic for arranging the comments in form we first extract parent comments then parent comments subcomment and order by parent_comment id 
+ parentComments = Comment.objects.all().filter(post_id = new.id,parent_comment_id=None)
+    subComments = Comment.objects.all().filter(post_id = new.id).filter(~Q(parent_comment_id=None)).order_by('parent_comment_id')
+    
+
+facing the the error while posting comment 
+link which is forming : http://127.0.0.1:8000/single-post/2/postComment
+error :  
+^(?P<path>.*)$
+The current path, single-post/2/postComment, matched the last one.
+Page not found (404)
+“P:\WorkSpace\Django\Projects\NewsBitProject\NewsBit\media\single-post\2\postComment” does not exist
+ where form is :  <form action="postComment" method="post">
+
+view function for postComment:
+def postComment(request):
+    if request.method =="POST":
+
+        print("hhii")
+        return redirect('/')
+
+    return render(request,"single-post.html")
+
+
+
+    
+we resolve the error by adding the / in form action : <form action="/postComment" method="post">
+ now we hitting the postComment successfully : 
+
+
+we are posting the comment without parent comment id  now lets create the logic for replying to parent comment for that we have to click reply Button
+after servral try i got 2 way to solve posting commnet 
+ error while activating all reply buttons for all comments 
+ first way :
+    in reply button we call an js function and comment id as parameter and get second div id  with comment id 
+
+<a class="comment-reply" onclick=comment({{comment.id}})></i> Reply</a>
+<div id="secondDiv{{comment.id}}">
+This is my DIV element.
+</div>
+function comment({{comment.id}}) {
+        var secondDiv = document.getElementById("secondDiv{{comment.id}}");
+        if (secondDiv.style.display === "none") {
+            secondDiv.style.display = "block";
+        } else {
+            secondDiv.style.display = "none";
+        }
+    };
+
+second way : 
+i found about collapse in bootstrap i used that 
+
+<a class="comment-reply" data-toggle="collapse" data-target="#collapseExample{{comment.id}}" aria-expanded="false" aria-controls="collapseExample{{comment.id}}" ><i class="fa fa-reply"></i> Reply</a>
+                        
+                        <div class="collapse" id="collapseExample{{comment.id}}">
+                            <div class="card card-body">
+                                <form action="/postComment" method="post">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="news_id" value="{{news.id}}" id="comment_id">
+                                    <input type="hidden" name="author_id" value="{{news.author_id}}" id="comment_id">
+                                    <input type="hidden" name="parentComment_id" value="{{comment.id}}" id="comment_id">
+                                    <div class="form-group">
+                                        <label for="comment">Post a reply </label>
+                                        <input type="text" class="form-control" name="content" placeholder="Enter comment here">
+                                        <button type="submit" class="btn btn-light">Submit</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
+
+now its works fine 
+
+but we new issue that is we only have parent comment and its child comments but if any reply to child comments is doesnt display
+we are lagging in the displaying the comments properly
+
+
+
+
+
 
 1.i want the slider for tags with multiple tags selection
 2.assign color to the tags like danger, info for background color

@@ -148,3 +148,8 @@ jQuery(function($) {
 		return false;
 	});
 });
+
+$(".comment-reply").click('click',function () {
+	console.log("hii");
+	
+})
