@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'ckeditor',
     'ckeditor_uploader',
     # 'django_ckeditor_5',
+    'taggit',
 
 ]
 

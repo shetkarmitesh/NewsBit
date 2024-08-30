@@ -103,6 +103,7 @@ def logout(request):
 
 def single_post(request,newsId):
     new = news.objects.get(id=newsId)
+    print(new.headline,len(new.tags.all()))
     parentComments = Comment.objects.all().filter(post_id = new.id,parent_comment_id=None)
     subComments = Comment.objects.all().filter(post_id = new.id).filter(~Q(parent_comment_id=None)).order_by('parent_comment_id')
     # print(len(subComments),"p0000000000000000000000000")

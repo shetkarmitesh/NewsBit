@@ -5,3 +5,10 @@ show tables;
 
 select * from auth_user;
 select * from newsbitapp_news;
+select * from newsbitapp_author;
+select * from newsbitapp_comment;
+select * from newsbitapp_category;
+select * from newsbitapp_tags;
+select * from newsbitapp_category_tags;
+select * from newsbitapp_tag1;
+drop table newsbitapp_tags;

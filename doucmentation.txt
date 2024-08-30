@@ -446,6 +446,75 @@ but we new issue that is we only have parent comment and its child comments but 
 we are lagging in the displaying the comments properly
 
 
+******************** category model ******************
+category is a model which conatain type such as health , game , tech , entertainment,etc
+for that we have declare an category type inside the category model with text choices 
+class CategoryType(models.TextChoices):
+        Entertainment = 'Entertainment'
+        Game = 'Game'
+    name = models.CharField(max_length=50,choices=CategoryType.choices)
+
+now we have to add category color to display with color lke primary, info , danger 
+
+above logic is not suitable for new category type so we have decalre normal varible with unique and assign color with choices
+
+class Category(models.Model):
+           
+    color_choices = {
+    "danger": "danger",
+    "primary": "primary",
+    "success": "success",
+    "info": "info",
+    "warning": "warning",
+    "light": "light",
+    "dark": "dark",
+    "transparent": "transparent",
+    }
+    name = models.CharField(max_length=50,unique=True)
+    name_color = models.CharField(max_length=50,choices=color_choices,default="primary")
+
+lets comment tags and tag color in news model
+    tags = models.CharField(max_length=100)
+    # tagBackColor = models.CharField(max_length=100)
+
+
+now we reuired tags which contain multiple category for that we are using many to many field 
+#     # tag = models.ManyToManyField(Category)
+it run successfully for experimental model tags : 
+
+but while adding it in news feild we get error as : 
+Explanation: This error occurs when two or more relationships in your Django models use the same default reverse accessor name. In your case, it seems that both category and tags fields are trying to use the same default reverse accessor name.
+
+solution we found that is assign the related name to each fields that uses ForeignKeyor many many feild 
+category = models.ForeignKey(Category,on_delete=models.CASCADE, related_name='news_by_category')
+    tags = models.ManyToManyField(Category, related_name='news_by_tags')
+
+now lets access the tags in post  for that we have to fetch all the objects of tags as : news.tags.all
+now iterate it 
+        {%for item in news.tags.all%}
+        <a href="{% url 'post-category-2'%}">{{item.name}}</a>
+        {%endfor%}
+item.name is from category model
+
+
+
+
+
+we are using the django-taggit library for tags defining by the user 
+ it has tag model in built
+ commnad ::: pip install django-taggit
+
+ in setting.py include taggit in install apps
+ INSTALLED_APPS = [
+    ...
+    'taggit'
+]
+
+create model category
+import : from taggit.managers import TaggableManager
+tags = TaggableManager()
+
+The TaggableManager will show up automatically as a field in a ModelForm or in the admin. 
 
 
 
@@ -453,3 +522,6 @@ we are lagging in the displaying the comments properly
 1.i want the slider for tags with multiple tags selection
 2.assign color to the tags like danger, info for background color
 user profile management
+3 above error in comment
+4
+new model for category

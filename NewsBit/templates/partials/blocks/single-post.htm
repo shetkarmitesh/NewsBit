@@ -2,7 +2,7 @@
 <!-- {{news.description}} -->
 <div class="single-post">
     <div class="post-header mb-5">
-        <a class="post-category" href="{% url 'post-category-1'%}">{{news.tags}}</a>
+        <a class="post-category" href="{% url 'post-category-1'%}">{{news.category_name}}</a>
         <h2 class="post-title">
             {{news.headline}}
         </h2>
@@ -40,9 +40,12 @@
         <div class="share-block  d-flex justify-content-between align-items-center border-top border-bottom mt-5">
             <div class="post-tags">
                 <span>Tags</span>
-                <a href="{% url 'post-category-2'%}">Health</a>
-                <a href="{% url 'post-category-2'%}">Game</a>
-                <a href="{% url 'post-category-2'%}">Tour</a>
+                {%for item in news.tags.all%}
+                <a href="{% url 'post-category-2'%}">{{item.name}}</a>
+                
+                {%endfor%}
+                <!-- <a href="{% url 'post-category-2'%}">Health</a>
+                <a href="{% url 'post-category-2'%}">Tour</a> -->
             </div>
 
             <ul class="share-icons list-unstyled ">
