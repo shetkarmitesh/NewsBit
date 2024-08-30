@@ -1,5 +1,11 @@
-@@include('header.htm')
+{% include 'partials/header.htm' %} 
+{% include "partials/blocks/top-nav.htm" %}
+{% include "partials/blocks/trending-bar-dark.htm" %}
+{% include "partials/blocks/navigation.htm" %}
+{% include "partials/blocks/breadcrumb.htm" %} 
+<!-- need to pass the title -->
 
+<!-- @@include('header.htm')
 @@include('blocks/top-nav.htm')
 
 @@include('blocks/trending-bar-dark.htm')
@@ -8,7 +14,7 @@
 
 @@include('blocks/breadcrumb.htm', {
 	"title"	: "Lifestyle"
-})
+}) -->
 
 <section class="block-wrapper">
 	<div class="container">
@@ -17,20 +23,28 @@
 				<div class="block category-listing">
 					<h3 class="news-title"><span>Lifestyle</span></h3>
 				</div>
-				@@include('blocks/post-style-five.htm')
-				@@include('blocks/pagination.htm')
+				{% include "partials/blocks/post-style-five.htm" %}
+				{% include "partials/blocks/pagination.htm" %}
+				
+				<!-- @@include('blocks/post-style-five.htm') -->
+				<!-- @@include('blocks/pagination.htm') -->
 			</div>
 			<div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
 				<div class="sidebar sidebar-right">
-					@@include('blocks/widget-social-share.htm')
+					{% include "partials/blocks/widget-social-share.htm" %}
+					{% include "partials/blocks/widget-sidebar-ads.htm" %}
+					{% include "partials/blocks/widget-popular-post.htm" %}
+					<!-- @@include('blocks/widget-social-share.htm')
 					@@include('blocks/widget-sidebar-ads.htm')
-					@@include('blocks/widget-popular-post.htm')
+					@@include('blocks/widget-popular-post.htm') -->
 				</div>
 			</div>
 		</div>
 	</div>
 </section>
-
+{% include "partials/blocks/footer.htm" %}
+{% include "partials/footer.htm" %}
+<!-- 
 @@include('blocks/footer.htm')
 
-@@include('footer.htm')
+@@include('footer.htm') -->

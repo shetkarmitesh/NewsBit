@@ -1,4 +1,10 @@
-@@include('header.htm')
+{% include 'partials/header.htm' %} 
+{% include "partials/blocks/top-nav.htm" %}
+{% include "partials/blocks/trending-bar-dark.htm" %}
+{% include "partials/blocks/navigation.htm" %}
+{% include "partials/blocks/breadcrumb.htm" with titles='' %} 
+
+<!-- @@include('header.htm')
 
 @@include('blocks/top-nav.htm')
 
@@ -6,32 +12,43 @@
 
 @@include('blocks/navigation.htm')
 
-@@include('blocks/breadcrumb.htm', {
+-->
+<!-- @@include('blocks/breadcrumb.htm', {
 	"title"	:	"Technology"
-})
-
+})  -->
 <section class="section-padding">
 	<div class="container">
 		<div class="row">
 			<div class="col-lg-8 col-md-12 col-sm-12 col-xs-12">
 				<div class="block category-listing category-style2">
-					<h3 class="news-title"><span>Technology</span></h3>
-					@@include('blocks/post-style-six.htm')
+					<h3 class="news-title"><span>{{title}}</span></h3>
+					<!-- @@include('blocks/post-style-six.htm') -->
+				{% include "partials/blocks/post-style-six.htm" %}
+
 				</div>
-				@@include('blocks/pagination.htm')
+				<!-- @@include('blocks/pagination.htm') -->
+				{% include "partials/blocks/pagination.htm" %}
+
 			</div>
 			<div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
 				<div class="sidebar sidebar-right">
-					@@include('blocks/widget-social-share.htm')
+					{% include "partials/blocks/widget-social-share.htm" %}
+					{% include "partials/blocks/widget-review.htm" %}
+					{% include "partials/blocks/widget-sidebar-ads.htm" %}
+					{% include "partials/blocks/widget-newsletter.htm" %}
+					<!-- @@include('blocks/widget-social-share.htm')
 					@@include('blocks/widget-review.htm')
 					@@include('blocks/widget-sidebar-ads.htm')
-					@@include('blocks/widget-newsletter.htm')
+					@@include('blocks/widget-newsletter.htm') -->
 				</div>
 			</div>
 		</div>
 	</div>
 </section>
 
-@@include('blocks/footer.htm')
 
-@@include('footer.htm')
+{% include "partials/blocks/footer.htm" %}
+{% include "partials/footer.htm" %}
+<!-- @@include('blocks/footer.htm')
+
+@@include('footer.htm') -->

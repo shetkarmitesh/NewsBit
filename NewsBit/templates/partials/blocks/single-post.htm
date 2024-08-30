@@ -41,11 +41,13 @@
             <div class="post-tags">
                 <span>Tags</span>
                 {%for item in news.tags.all%}
-                <a href="{% url 'post-category-2'%}">{{item.name}}</a>
+                <a href="{% url 'post-category' item.id %}"> {{item.name}}</a>
                 
                 {%endfor%}
-                <!-- <a href="{% url 'post-category-2'%}">Health</a>
-                <a href="{% url 'post-category-2'%}">Tour</a> -->
+                {%comment%}
+                <!-- <a href="{% url 'post-category'{{item.id}}%}">Health</a>
+                <a href="{% url 'post-category'{{item.id}}%}">Tour</a> -->
+                {%endcomment%}
             </div>
 
             <ul class="share-icons list-unstyled ">

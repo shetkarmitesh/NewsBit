@@ -498,6 +498,57 @@ item.name is from category model
 
 
 
+*************** post-category ************
+
+
+
+creating page to display data for specific category like life style,game ,tech
+page requesting gor post-category-1.html here we need to pass category id instead of 1 and have to maintain only one html page
+
+passed the tag id  like 
+
+{%for item in news.tags.all%}
+                <a href="{% url 'post-category' item.id %}"> {{item.name}}</a>
+                
+{%endfor%}
+
+mapped the urls as  :path('post-category/<int:category_id>', views.post_category,name="post-category"),
+now the view function 
+
+def post_category(request,category_id):
+    news_details = news.objects.all().filter(tags = category_id)
+    print(len(news_details))
+    return render(request,'post-category-2.html',{'news':news_details})
+
+to access the id of tag for fetching specific news post applay filter :  filter(tags = category_id)
+
+post-category contain one include statement of breadcrum which one argument with in for that we are using with statement to pass the argument 
+
+as {% include "partials/blocks/breadcrumb.htm" with title="asdf" %} 
+where we faced the error to pass the argument error was the space between title and = like  title="asdf"
+error : 
+        TemplateSyntaxError at /post-category/2
+        "with" in 'include' tag needs at least one keyword argument.
+solve error because of : Looks like Django is quite picky about whitespace in this instance
+
+now to acccess that title just use {{title}} it will print the value in it
+
+it is beneficial because in wont accept the value from the database or view function so we have directly add the values like {{titles}}
+                    <li>{{title}}</li>
+in breadcrum.htm and post-category-2.html title section 
+
+now from here we are including the post-six-style which have multiple news and slidebar 
+so here we have achieve pagination later ********************************************************
+
+
+
+**************editor choices ****************
+we have section as editor picks in home page so for that we want 8 news that should be picked by editor 
+
+here we add more than 8 but for that list of news should be even divisible of 2 
+
+
+
 
 
 we are using the django-taggit library for tags defining by the user 
@@ -519,9 +570,18 @@ The TaggableManager will show up automatically as a field in a ModelForm or in t
 
 
 
-1.i want the slider for tags with multiple tags selection
-2.assign color to the tags like danger, info for background color
+1.i want the slider for tags with multiple tags selection : done 
+2.assign color to the tags like danger, info for background color : done 
+4 new model for category : done
+
+
 user profile management
 3 above error in comment
-4
-new model for category
+
+
+5 create model for editor picks where pass the news and editor can select 6-8 post from all posted news
+sections required
+editor picks , most recent ,hot news, beauty blog,tech, latest artcile ,top authors
+6. slidebar logic for post by category : done
+
+

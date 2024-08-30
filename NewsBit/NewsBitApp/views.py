@@ -1,7 +1,7 @@
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from django.contrib.auth.models import User,auth
-from .models import news,Author,Comment
+from .models import news,Author,Comment,Category
 from django.contrib import messages
 from django.db.models import Q
 
@@ -45,10 +45,9 @@ def search(request):
 
 def post_category_1(request):
     return render(request,'index.html')
-def post_category_2(request):
-    return render(request,'index.html')
 def post_full_width(request):
     return render(request,'index.html')
+
 def post_left_sidebar(request):
     return render(request,'index.html')
 def m404(request):
@@ -103,7 +102,9 @@ def logout(request):
 
 def single_post(request,newsId):
     new = news.objects.get(id=newsId)
-    print(new.headline,len(new.tags.all()))
+    # print(new.headline,len(new.tags.all()))
+    # for i in new.tags.all():
+    #     print(i.id)
     parentComments = Comment.objects.all().filter(post_id = new.id,parent_comment_id=None)
     subComments = Comment.objects.all().filter(post_id = new.id).filter(~Q(parent_comment_id=None)).order_by('parent_comment_id')
     # print(len(subComments),"p0000000000000000000000000")
@@ -130,3 +131,9 @@ def postComment(request):
         return redirect('single-post',news_id)
 
     return render(request,"single-post.html")
+
+def post_category(request,category_id):
+    news_details = news.objects.all().filter(tags = category_id)
+    title = Category.objects.get(id =category_id)
+    
+    return render(request,'post-category-2.html',{'news':news_details,'title':title})

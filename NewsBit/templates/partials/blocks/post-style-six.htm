@@ -1,10 +1,13 @@
 {% load static %}
+<!-- loop will start -->
+ {%for item in news%}
 <div class="post-block-wrapper post-list-view clearfix">
+    
     <div class="row">
         <div class="col-md-5 col-sm-6">
             <div class="post-thumbnail thumb-float-style">
                 <a href="single-post.html">
-                    <img class="img-fluid" src="images/news/news-05.jpg" alt="" />
+                    <img class="img-fluid" src="{{item.img.url}}" alt="" />
                 </a>
             </div>
         </div>
@@ -13,27 +16,31 @@
                  <div class="post-meta">
                     <span>
                         <i class="fa fa-clock-o"></i>
-                        <a href="single-post.html#comments">17 june,2019</a>
+                        <a href="single-post.html#comments">{{item.get_time}}</a>
                     </span>
                    
                       <span class="post-author">
-                        <a href="author.html" class="text-dark">by Robert Martin </a>
+                        <a href="author.html" class="text-dark">by {{item.author_name}}</a>
                     </span>
                 </div>
                 <h2 class="post-title title-large ">
-                    <a href="single-post.html">10 critical points from epic security manifesto inability</a>
+                    <a href="single-post.html">{{item.headline}}</a>
                 </h2>
                
                 
                 <p>
-                    A mobile app without motion is just a sequence of independent screens. But when designers introduce motion.
+                    {{item.short_description}}
                 </p>
                 
             </div>
         </div>
     </div>
 </div>
+{%endfor%}
+<!-- loop end    -->
 
+
+{%comment%}
 <div class="post-block-wrapper post-list-view clearfix">
     <div class="row">
         <div class="col-md-5 col-sm-6">
@@ -169,3 +176,4 @@
         </div>
     </div>
 </div>
+{%endcomment%}

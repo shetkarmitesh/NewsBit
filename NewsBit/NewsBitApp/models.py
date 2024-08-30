@@ -129,4 +129,4 @@ class Comment(models.Model):
         return humanize.naturaltime(self.created_at)
 
 
-
+# class Editor
