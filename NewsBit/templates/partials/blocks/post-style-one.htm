@@ -4,40 +4,42 @@
         <span>Editor Picks</span>
     </h3>
     <div class="news-style-one-slide">
-        <!-- for loop start -->
         
+        <!-- for loop start -->
+        {%for item in editor_choice_news%}
         <div class="item">
+            
             <div class="post-block-wrapper clearfix mb-5">
                 <div class="post-thumbnail">
-                    <a href="single-post.htm">
-                        <img class="img-fluid" src="images/news/news-01.jpg" alt="post-image"/>
+                    <a href="{% url 'single-post' item.id %}">
+                        <img class="img-fluid" src="{{item.img.url}}" alt="post-image"/>
                     </a>
                 </div>
                 <div class="post-content">
                     <h2 class="post-title mt-3">
-                        <a href="single-post.html">Ex-Googler warns coding bootcamps are lacking</a>
+                        <a href="{% url 'single-post' item.id %}">{{item.headline}}</a>
                     </h2>
                     <div class="post-meta mb-2">
-                        <span class="posted-time"><i class="fa fa-clock-o mr-2"></i>5 hours ago</span>
+                        <span class="posted-time"><i class="fa fa-clock-o mr-2"></i>{{item.get_time}}</span>
                         <span class="post-author">
                             by
-                            <a href="author.html">Tarnak Sunder</a>
+                            <a href="author.html">{{item.author_name}}</a>
                         </span>
                     </div>
-                     <p>Suscipit beatae facilis doloribus aliquam sed expedita accusantium itaque assumenda laborum facere aliquid hic.</p>
+                     <p>{{item.short_description}}</p>
                 </div>
             </div>
 
 
             <div class="post-block-wrapper clearfix mb-5 ">
                 <div class="post-thumbnail">
-                    <a href="single-post.htm">
+                    <a href="{% url 'single-post' item.id %}">
                         <img class="img-fluid" src="images/news/news-02.jpg" alt="post-thumbnail"/>
                     </a>
                 </div>
                 <div class="post-content">
                     <h2 class="post-title">
-                        <a href="single-post.html">Extra Crunch The next service marketplace wave: Vertical </a>
+                        <a href="{% url 'single-post' item.id %}">Extra Crunch The next service marketplace wave: Vertical </a>
                     </h2>
                     <div class="post-meta mb-2">
                         <span class="posted-time"><i class="fa fa-clock-o mr-2"></i>5 hours ago</span>
@@ -50,10 +52,11 @@
                 </div>
             </div>
         </div>
-
-        <!-- for loop end -->
+        {%endfor%}
+        
 
         {%comment%}
+        
         <div class="item">
             <div class="post-block-wrapper clearfix mb-5">
                 <div class="post-thumbnail">
@@ -109,7 +112,7 @@
                 </div>
                 <div class="post-content">
                     <h2 class="post-title">
-                        <a href="single-post.html">Here's How To Get Free Pizza On lets check it out</a>
+                        <a href="single-post.html">Heres How To Get Free Pizza On lets check it out</a>
                     </h2>
                     <div class="post-meta mb-2">
                         <span class="posted-time"><i class="fa fa-clock-o mr-2"></i>5 hours ago</span>

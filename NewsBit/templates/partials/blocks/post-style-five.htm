@@ -1,30 +1,35 @@
 {% load static %}
 <div class="row">
+    <!-- for loop start -->
+     {%for item in news %}
     <div class="col-md-6 col-sm-6">
         <div class="post-block-wrapper post-grid-view clearfix">
             <div class="post-thumbnail">
-                <a href="{% url 'single-post' 1 %}">
-                    <img class="img-fluid" src="{% static 'images/news/news-17.jpg'%}" alt="post-thumbnail"/>
+                <a href="{% url 'single-post' item.id %}">
+                    <img class="img-fluid" src="{{item.img.url}}" alt="post-thumbnail"/>
                 </a>
             </div>
             <div class="post-content">
-                <a class="post-category" href="{% url 'post-category-2'%}">Google</a>
+                <a class="post-category" href="{% url 'post-category' item.category_id %}">{{item.category_name}}</a>
                 <h2 class="post-title mt-3">
-                    <a href="{% url 'single-post' 1 %}">Ex-Googler warns coding bootcamps are lacking</a>
+                    <a href="{% url 'single-post' item.id %}">{{item.headline}}</a>
                 </h2>
                 <div class="post-meta">
-                    <span class="posted-time">an hour ago</span>
+                    <span class="posted-time">{{item.get_time}}</span>
                     <span class="post-author">by
-                        <a href="{% url 'author' 1 %}">John Snow</a>
+                        <a href="{% url 'author' item.author_id %}">{{item.author_name}}</a>
                     </span>
                 </div>
                 <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel eaque, aliquid accusamus 
-                    soluta!...
+                    {{item.short_description}}
                 </p>
             </div>
         </div>
     </div>
+    {%endfor%}
+    <!-- for loop end -->
+
+    {%comment%}
     <div class="col-md-6 col-sm-6">
         <div class="post-block-wrapper post-grid-view clearfix">
             <div class="post-thumbnail">
@@ -33,7 +38,7 @@
                 </a>
             </div>
             <div class="post-content">
-                <a class="post-category" href="{% url 'post-category-2'%}">Food</a>
+                <a class="post-category" href="{% url 'post-category' 1 %}">Food</a>
                 <h2 class="post-title mt-3">
                     <a href="{% url 'single-post' 1 %}">Here's How To Get Free Pizza On</a>
                 </h2>
@@ -59,7 +64,7 @@
                 </a>
             </div>
             <div class="post-content">
-                <a class="post-category" href="{% url 'post-category-2'%}">Travel</a>
+                <a class="post-category" href="{% url 'post-category' 1 %}">Travel</a>
                 
                 <h2 class="post-title mt-3">
                     <a href="{% url 'single-post' 1 %}">Snow and Freezing Rain in Paris Forces the</a>
@@ -87,7 +92,7 @@
                 </a>
             </div>
             <div class="post-content">
-                <a class="post-category" href="{% url 'post-category-2'%}">Google</a>
+                <a class="post-category" href="{% url 'post-category' 1 %}">Google</a>
         
                 <h2 class="post-title mt-3">
                     <a href="{% url 'single-post' 1 %}">Intel’s new smart glasses actually look good</a>
@@ -117,7 +122,7 @@
                 </a>
             </div>
             <div class="post-content">
-                <a class="post-category" href="{% url 'post-category-2'%}">Apple</a>
+                <a class="post-category" href="{% url 'post-category' 1 %}">Apple</a>
                
                 <h2 class="post-title title-large mt-3">
                     <a href="{% url 'single-post' 1 %}">Apple HomePod review: locked in</a>
@@ -145,7 +150,7 @@
                 </a>
             </div>
             <div class="post-content">
-                <a class="post-category" href="{% url 'post-category-2'%}">Marc</a>
+                <a class="post-category" href="{% url 'post-category' 1 %}">Marc</a>
                 
                 <h2 class="post-title mt-3">
                     <a href="{% url 'single-post' 1 %}">An Asteroid Is Passing Earth Today: Here's How to</a>
@@ -165,4 +170,5 @@
             </div>
         </div>
     </div>
+    {%endcomment%}
 </div>

@@ -568,6 +568,38 @@ tags = TaggableManager()
 The TaggableManager will show up automatically as a field in a ModelForm or in the admin. 
 
 
+**************** Profile management ********************
+Creating the profile in navbar with the help of dropdown of bootstrap
+added icon in it with the help of  font awesome
+added user name and added padding and border radius for the div of dropdown
+
+changing the search feild and searching the best serch tab in bootstrap
+we found this 
+<form class="form-inline my-2 my-lg-0">
+      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+    </form>
+
+we assign padding and border-radius for profile in inline css
+now i want to style all navbar elements which have dropdown so we inspect on dropdown and open the style tab which show css applied on that dropdown so tried all elements with padding and border radius and found the 
+.main-navbar .dropdown:hover .dropdown-menu this tag
+
+.main-navbar .dropdown:hover .dropdown-menu {
+  transform: scaleY(1);
+  opacity: 1;
+  display: block;
+  visibility: visible;
+  padding: 10px; 
+  border-radius :10px;
+}
+
+changing the content of profile like i want to add logout ,
+
+
+************** section editor picks *******************
+we add new feild in news section editor_choice as boolean feild 
+
+now in editor choice get all the editor_choice news and passed the data in index page
 
 
 1.i want the slider for tags with multiple tags selection : done 
@@ -575,12 +607,15 @@ The TaggableManager will show up automatically as a field in a ModelForm or in t
 4 new model for category : done
 
 
-user profile management
+user profile management: done half 
 3 above error in comment
 
 
 5 create model for editor picks where pass the news and editor can select 6-8 post from all posted news
-sections required
+sections required : done by adding an boolean field in news
+
+
+
 editor picks , most recent ,hot news, beauty blog,tech, latest artcile ,top authors
 6. slidebar logic for post by category : done
 

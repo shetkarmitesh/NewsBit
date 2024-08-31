@@ -9,8 +9,9 @@ from django.db.models import Q
 
 def index(request):
     new = news.objects.all()[:4] 
-    
-    return render(request,'index.html',{'news':new})
+    editor_choice_news = news.objects.all().filter(editor_choice=True)
+    print(len(editor_choice_news))
+    return render(request,'index.html',{'news':new,'editor_choice_news':editor_choice_news})
 
 
 def index2(request):
@@ -24,7 +25,8 @@ def account(request):
 def author(request,author_id):
     author_details = Author.objects.get(id=author_id)
     # print(author_details.id,author_details.first_name,"asdaaaasdadadadsa")
-    return render(request,'author.html',{'author_detail':author_details})
+    news_details = news.objects.all().filter(author_id = author_details.id)
+    return render(request,'author.html',{'author_detail':author_details,"news":news_details})
 
 def contact(request):
     return render(request,'index.html')

@@ -88,6 +88,7 @@ class news (models.Model):
     description1 = RichTextUploadingField(null=True,blank=True)
     category = models.ForeignKey(Category,on_delete=models.CASCADE, related_name='news_by_category')
     tags = models.ManyToManyField(Category, related_name='news_by_tags')
+    editor_choice= models.BooleanField()
     def get_time(self):
         return humanize.naturaltime(self.datetime)
 

@@ -573,6 +573,8 @@ a[href^=tel] {
   opacity: 1;
   display: block;
   visibility: visible;
+  padding: 10px; 
+  border-radius :10px;
 }
 .main-navbar .dropdown-menu {
   text-align: left;
@@ -727,6 +729,7 @@ a[href^=tel] {
 
 .dropdown-menu {
   padding: 0px;
+  
 }
 
 .navbar-toggler span {
@@ -2073,6 +2076,7 @@ a {
   ul.navbar-nav > li > a,
 .dropdown-menu li a {
     font-size: 12px;
+    
   }
   /* Projects */
   .project-item-title {
@@ -2147,6 +2151,8 @@ a {
   }
   ul.nav li.dropdown:hover ul.dropdown-menu {
     display: none;
+  
+    
   }
   ul.nav li.dropdown.open ul.dropdown-menu {
     display: block;
@@ -2159,6 +2165,7 @@ a {
     background-color: transparent;
     border: 0;
     box-shadow: none;
+    
   }
   /* Navigation */
   .navbar-collapse {
