@@ -4,49 +4,66 @@
         <span>Beauty Blog</span>
     </h3>
     <div class="post-slide">
+        <!-- for loop start -->
         <div class="item">
-            <div class="post-overlay-wrapper clearfix">
-                <div class="post-thumbnail">
-                    <a href="single-post.html">
-                        <img class="img-fluid" src="images/news/news-16.jpg" alt="post-thumbnail"/>
-                    </a>
-                </div>
-                <div class="post-content">
-                    <a class="post-category white" href="post-category-2.html">Hair</a>
-                    <h2 class="post-title">
-                        <a href="single-post.html">On Beauty: Style and Fashion Blogger...</a>
-                    </h2>
-                    <div class="post-meta white">
-                        <span class="posted-time">4 hours ago</span>
-                        <span> by </span>
-                        <span class="post-author">
-                            <a href="author.html">Jammy Anderson</a>
-                        </span>
-                    </div>
-                </div>
-            </div>
+            {%for item in beauty_cat%}
 
-            <div class="post-overlay-wrapper clearfix mt-3">
-                <div class="post-thumbnail">
-                    <a href="single-post.html">
-                        <img class="img-fluid" src="images/news/news-18.jpg" alt="post-thumbnail"/>
-                    </a>
-                </div>
-                <div class="post-content">
-                    <a class="post-category white" href="post-category-2.html">Eyes</a>
-                    <h2 class="post-title">
-                        <a href="single-post.html">The Best Eye Makeup Tutorials fo...</a>
-                    </h2>
-                    <div class="post-meta white">
-                        <span class="posted-time">5 hours ago</span>
-                        <span> by </span>
-                        <span class="post-author">
-                            <a href="author.html">Roberto Carlous</a>
-                        </span>
+                    <div class="post-overlay-wrapper clearfix">
+                        <div class="post-thumbnail">
+                            <a href="{% url 'single-post' item.id %}">
+                                <img class="img-fluid" src="{{item.img.url}}" alt="post-thumbnail"/>
+                            </a>
+                        </div>
+                        <div class="post-content">
+                            <a class="post-category white" href="{% url 'post-category' item.category_id %}">{{item.category_name}}</a>
+                            <h2 class="post-title">
+                                <a href="{% url 'single-post' item.id %}">{{item.headline}}</a>
+                            </h2>
+                            <div class="post-meta white">
+                                <span class="posted-time">{{item.get_time}}</span>
+                                <span> by </span>
+                                <span class="post-author">
+                                    <a href="{% url 'author' item.author_id %}">{{item.author_name}}</a>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                {% if forloop.counter|divisibleby:2%}
+                <!-- ending the item div -->
+                    </div>
+                    <div class="item">
+
+                {%endif%}
+
+
+            {%endfor%}
+            <!-- item div -->
+        </div>
+    </div>
+</div>  
+        {%comment%}
+                    <div class="post-overlay-wrapper clearfix mt-3">
+                        <div class="post-thumbnail">
+                            <a href="single-post.html">
+                                <img class="img-fluid" src="images/news/news-18.jpg" alt="post-thumbnail"/>
+                            </a>
+                        </div>
+                        <div class="post-content">
+                            <a class="post-category white" href="post-category-2.html">Eyes</a>
+                            <h2 class="post-title">
+                                <a href="single-post.html">The Best Eye Makeup Tutorials fo...</a>
+                            </h2>
+                            <div class="post-meta white">
+                                <span class="posted-time">5 hours ago</span>
+                                <span> by </span>
+                                <span class="post-author">
+                                    <a href="author.html">Roberto Carlous</a>
+                                </span>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </div>
 
         <div class="item ">
             <div class="post-overlay-wrapper clearfix">
@@ -91,5 +108,5 @@
                 </div>
             </div>
         </div>
-    </div>
-</div>
+        {%endcomment%}
+ 

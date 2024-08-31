@@ -694,22 +694,178 @@ changing the content of profile like i want to add logout ,
 
 
 
+****************** Tech Section ***********************
+making dyamic tech dection in index.html 
+fetched the data of tech category by passing the tech id as 4
+passed the data to index.html page 
+lets write the logic for displaying the news posts
+we have main section row it contain all the news so in row section we haved to call the for loop
+
+check loop work for single post so run successfully
+<!-- loop starts  -->
+        {%for item in tech_cat%}
+        <div class="col-md-6 col-sm-6">
+            <div class="post-block-wrapper clearfix">
+                <div class="post-thumbnail">
+                    <a href="{% url 'single-post' item.id %}">
+                        <img class="img-fluid" src="{{item.img.url}}" alt="post-thumbnail"/>
+                    </a>
+                </div>
+                <a class="post-category" href="{% url 'post-category' item.category_id %}">{{item.category_name}}</a>
+                <div class="post-content">
+                    <h2 class="post-title mt-3">
+                        <a href="{% url 'single-post' item.id %}">{{item.headline}}</a>
+                    </h2>
+                    
+                    
+                    <div class="post-meta mb-2">
+                        <span class="posted-time"><i class="fa fa-clock-o mr-2"></i>{{item.get_time}}</span>
+                        <span class="post-author">
+                            by
+                            <a href="{% url 'author' 1 %}">{{item.author_name}}</a>
+                        </span>
+                    </div>
+                    <p>{{item.short_description}}</p>
+                        
+                    </div>
+                </div>
+        </div>
+        {%endfor%}
+
+now add new div like we have in website 
+so next div start <div class="col-md-6 col-sm-6"> </div>
+in this div all the remaining items will display using loop 
+for that inn if condition we have start this div and have to end div outside the loop such as :
+ {%for item in tech_cat%}
+            {% if forloop.counter == 1 %}
+            <div class="col-md-6 col-sm-6">
+                <div class="post-block-wrapper clearfix">
+                    <div class="post-thumbnail">
+                        <a href="{% url 'single-post' item.id %}">
+                            <img class="img-fluid" src="{{item.img.url}}" alt="post-thumbnail"/>
+                        </a>
+                    </div>
+                    <a class="post-category" href="{% url 'post-category' item.category_id %}">{{item.category_name}}</a>
+                    <div class="post-content">
+                        <h2 class="post-title mt-3">
+                            <a href="{% url 'single-post' item.id %}">{{item.headline}}</a>
+                        </h2>
+                        
+                        
+                        <div class="post-meta mb-2">
+                            <span class="posted-time"><i class="fa fa-clock-o mr-2"></i>{{item.get_time}}</span>
+                            <span class="post-author">
+                                by
+                                <a href="{% url 'author' 1 %}">{{item.author_name}}</a>
+                            </span>
+                        </div>
+                        <p>{{item.short_description}}</div>
+                    </div>
+                </div>
+
+                <div class="col-md-6 col-sm-6">
+            {%endif%}
+
+        <!-- new section starts -->
+                    <div class="post-list-block m-top-0">
+                        <div class="post-block-wrapper post-float clearfix">
+                            <div class="post-thumbnail">
+                                <a href="{% url 'single-post' 1 %}">
+                                    <img class="img-fluid" src="{% static 'images/news/news-04.jpg'%}" alt="post-thumbnail"/>
+                                </a>
+                            </div>
+                            <div class="post-content">
+                                <h2 class="post-title title-sm">
+                                    <a href="{% url 'single-post' 1 %}">Intel’s new smart glasses actually look good</a>
+                                </h2>
+                                <div class="post-meta">
+                                    <span class="posted-time"><i class="fa fa-clock-o mr-2"></i>7 hours ago</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {%endfor%}
+                </div>
+            
+tech section done
+we have one problem as it display the first element again 
+
+***************** Beauty Blog ************************
+
+here we have to fetch the data for multiple ids or caategories so in filter add ids like 
+    beauty_cat = news.objects.all().filter(Q(category_id =7 ) | Q(category_id=8 ) | Q(category_id=12 ) | Q(category_id=13))
+Q()
+
+Django Q objects:
+
+Q object encapsulates a SQL expression in a Python object that can be used in database-related operations. Using Q objects we can make complex queries with less and simple code.
+
+logic for slidder is slider class and item class are outside the for loop 
+In for loop add if condition as if loop counter is divisibleby 2 => end item div and start new item div 
+<!-- for loop start -->
+        <div class="item">
+            {%for item in beauty_cat%}
+
+                    <div class="post-overlay-wrapper clearfix">
+                        <div class="post-thumbnail">
+                            <a href="{% url 'single-post' item.id %}">
+                                <img class="img-fluid" src="{{item.img.url}}" alt="post-thumbnail"/>
+                            </a>
+                        </div>
+                        <div class="post-content">
+                            <a class="post-category white" href="{% url 'post-category' item.category_id %}">{{item.category_name}}</a>
+                            <h2 class="post-title">
+                                <a href="{% url 'single-post' item.id %}">On Beauty: Style and Fashion Blogger...</a>
+                            </h2>
+                            <div class="post-meta white">
+                                <span class="posted-time">4 hours ago</span>
+                                <span> by </span>
+                                <span class="post-author">
+                                    <a href="author.html">Jammy Anderson</a>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                {% if forloop.counter|divisibleby:2%}
+                <!-- ending the item div -->
+                    </div>
+                    <div class="item">
+
+                {%endif%}
+
+
+            {%endfor%}
+            <!-- item div -->
+        </div>
+
+
+
+
+
+
+
+
+
+
+************************Tasks ***********************
 1.i want the slider for tags with multiple tags selection : done 
 2.assign color to the tags like danger, info for background color : done 
 4 new model for category : done
 5 create model for editor picks where pass the news and editor can select 6-8 post from all posted news :done
 sections required : done by adding an boolean field in news
+6. slidebar logic for post by category : done
 
 
 user profile management: done half 
 3 above error in comment like parents reply done but anyone reply to child does not shows on page
 i have idea to display like instagram like if anyone reply to child then display it there only
 
+we have one problem as it display the first element again : tech section
 
 
 
 
-editor picks , most recent ,hot news, beauty blog,tech, latest artcile ,top authors
-6. slidebar logic for post by category : done
+, most recent ,hot news, beauty blog,tech, latest artcile ,top authors
 
 

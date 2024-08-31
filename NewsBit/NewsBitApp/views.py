@@ -10,8 +10,14 @@ from django.db.models import Q
 def index(request):
     new = news.objects.all()[:4] 
     editor_choice_news = news.objects.all().filter(editor_choice=True)
-    print(len(editor_choice_news))
-    return render(request,'index.html',{'news':new,'editor_choice_news':editor_choice_news})
+    # applying the length of 5 
+    tech_cat = news.objects.all().filter(category_id =5)[:6]
+    beauty_cat = news.objects.all().filter(Q(category_id =7 ) | Q(category_id=8 ) | Q(category_id=12 ) | Q(category_id=13))
+
+
+
+    print(len(beauty_cat),tech_cat[0].headline)
+    return render(request,'index.html',{'news':new,'editor_choice_news':editor_choice_news,'tech_cat':tech_cat,'beauty_cat':beauty_cat})
 
 
 def index2(request):
