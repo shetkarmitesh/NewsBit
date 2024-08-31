@@ -543,14 +543,107 @@ so here we have achieve pagination later ***************************************
 
 
 **************editor choices ****************
+************** section editor picks *******************
+we add new feild in news section editor_choice as boolean feild 
+
+now in editor choice get all the editor_choice news and passed the data in index page
+
+
 we have section as editor picks in home page so for that we want 8 news that should be picked by editor 
 
 here we add more than 8 but for that list of news should be even divisible of 2 
 
+now we have the logic to display the slider for two imgage in slider of we click in silder it add new image 
+logic is for loop for main section of news and before end of for loop add condition of if forloop counter is divisible by 2 add div tag for slider like div of above the main section
+
+<div class="item"> // tag of slider 
+            <!-- for loop start -->
+            {%for item in editor_choice_news %}
+            <!-- main section -->
+            <div class="post-block-wrapper clearfix mb-5">
+                <div class="post-thumbnail">
+                    <a href="{% url 'single-post' item.id %}">
+                        <img class="img-fluid" src="{{item.img.url}}" alt="post-image"/>
+                    </a>
+                </div>
+                <div class="post-content">
+                    <h2 class="post-title mt-3">
+                        <a href="{% url 'single-post' item.id %}">{{item.headline}} {{item.id}}</a>
+                    </h2>
+                    <div class="post-meta mb-2">
+                        <span class="posted-time"><i class="fa fa-clock-o mr-2"></i>{{item.get_time}}</span>
+                        <span class="post-author">
+                            by
+                            <a href="author.html">{{item.author_name}}</a>
+                        </span>
+                    </div>
+                     <p>{{item.short_description}}</p>
+                </div>
+            </div>
+            {% if forloop.counter|divisibleby:2 %}
+                <div class="item">
+           
+            {%else%}
+                </div>
+        {%endif%}
+    {%endfor%}
+</div>
+
+displays images like 12 23 34 45 56 67 78 89
+
+but we want in 
+1 3 5 7  
+2 4 6 8
+heee we successfully decode the logic for above pattern just some correction in code and we are able to solve it 
+first our section  
+        <div class="news-style-one-slide"> provide silde options
+        <div class="item"> decide the rows 
+
+after item section loop starts it prints first item then seconde item then applying the condition if forloop.counter|divisible by 2 if yes 
+then end the iten section and again item section then loop starts again at counter 3 print item 3 at positon of 1 then print item 4 below item3 checks condition if counter 4 is divisible by 4 if yes end item new item continues till end 
+and last but import outside the for loop the should be the end tag for item 
+
+<div class="news-style-one-slide">
+        <div class="item">
+            <!-- for loop start -->
+            {%for item in editor_choice_news %}
+            <!-- main section -->
+            <div class="post-block-wrapper clearfix mb-5">
+                <div class="post-thumbnail">
+                    <a href="{% url 'single-post' item.id %}">
+                        <img class="img-fluid" src="{{item.img.url}}" alt="post-image"/>
+                    </a>
+                </div>
+                <div class="post-content">
+                    <h2 class="post-title mt-3">
+                        <a href="{% url 'single-post' item.id %}">{{item.headline}} {{item.id}}</a>
+                    </h2>
+                    <div class="post-meta mb-2">
+                        <span class="posted-time"><i class="fa fa-clock-o mr-2"></i>{{item.get_time}}</span>
+                        <span class="post-author">
+                            by
+                            <a href="author.html">{{item.author_name}}</a>
+                        </span>
+                    </div>
+                     <p>{{item.short_description}}</p>
+                </div>
+            </div>
+            {% if forloop.counter|divisibleby:2 %}
+            </div>
+             <div class="item">
+                
+                {%endif%}
+        {%endfor%}
+    </div>
+
+</div>
+
+done with the slider logic for editor picks and new slider logic got 
 
 
 
 
+*************************** taggit library ***********************
 we are using the django-taggit library for tags defining by the user 
  it has tag model in built
  commnad ::: pip install django-taggit
@@ -566,6 +659,9 @@ import : from taggit.managers import TaggableManager
 tags = TaggableManager()
 
 The TaggableManager will show up automatically as a field in a ModelForm or in the admin. 
+end taggit library not using anymore
+
+
 
 
 **************** Profile management ********************
@@ -596,23 +692,20 @@ now i want to style all navbar elements which have dropdown so we inspect on dro
 changing the content of profile like i want to add logout ,
 
 
-************** section editor picks *******************
-we add new feild in news section editor_choice as boolean feild 
-
-now in editor choice get all the editor_choice news and passed the data in index page
 
 
 1.i want the slider for tags with multiple tags selection : done 
 2.assign color to the tags like danger, info for background color : done 
 4 new model for category : done
+5 create model for editor picks where pass the news and editor can select 6-8 post from all posted news :done
+sections required : done by adding an boolean field in news
 
 
 user profile management: done half 
-3 above error in comment
+3 above error in comment like parents reply done but anyone reply to child does not shows on page
+i have idea to display like instagram like if anyone reply to child then display it there only
 
 
-5 create model for editor picks where pass the news and editor can select 6-8 post from all posted news
-sections required : done by adding an boolean field in news
 
 
 

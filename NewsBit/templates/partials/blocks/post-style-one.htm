@@ -3,12 +3,12 @@
     <h3 class="news-title">
         <span>Editor Picks</span>
     </h3>
+
     <div class="news-style-one-slide">
-        
-        <!-- for loop start -->
-        {%for item in editor_choice_news%}
         <div class="item">
-            
+            <!-- for loop start -->
+            {%for item in editor_choice_news %}
+            <!-- main section -->
             <div class="post-block-wrapper clearfix mb-5">
                 <div class="post-thumbnail">
                     <a href="{% url 'single-post' item.id %}">
@@ -17,7 +17,7 @@
                 </div>
                 <div class="post-content">
                     <h2 class="post-title mt-3">
-                        <a href="{% url 'single-post' item.id %}">{{item.headline}}</a>
+                        <a href="{% url 'single-post' item.id %}">{{item.headline}} {{item.id}}</a>
                     </h2>
                     <div class="post-meta mb-2">
                         <span class="posted-time"><i class="fa fa-clock-o mr-2"></i>{{item.get_time}}</span>
@@ -29,17 +29,29 @@
                      <p>{{item.short_description}}</p>
                 </div>
             </div>
+            {% if forloop.counter|divisibleby:2 %}
+            </div>
+             <div class="item">
+                
+                {%endif%}
+        {%endfor%}
+    </div>
 
+    </div>
+</div>
+
+
+         {%comment%}
 
             <div class="post-block-wrapper clearfix mb-5 ">
                 <div class="post-thumbnail">
-                    <a href="{% url 'single-post' item.id %}">
+                    <a href="{% url 'single-post' 1 %}">
                         <img class="img-fluid" src="images/news/news-02.jpg" alt="post-thumbnail"/>
                     </a>
                 </div>
                 <div class="post-content">
                     <h2 class="post-title">
-                        <a href="{% url 'single-post' item.id %}">Extra Crunch The next service marketplace wave: Vertical </a>
+                        <a href="{% url 'single-post' 1 %}">Extra Crunch The next service marketplace wave: Vertical </a>
                     </h2>
                     <div class="post-meta mb-2">
                         <span class="posted-time"><i class="fa fa-clock-o mr-2"></i>5 hours ago</span>
@@ -51,11 +63,10 @@
                      <p>Suscipit beatae facilis doloribus aliquam sed expedita accusantium itaque assumenda laborum facere aliquid hic.</p>
                 </div>
             </div>
-        </div>
-        {%endfor%}
+         </div>
         
 
-        {%comment%}
+         {%comment%}
         
         <div class="item">
             <div class="post-block-wrapper clearfix mb-5">
@@ -194,6 +205,5 @@
                 </div>
             </div>
         </div>
-        {%endcomment%}
-    </div>
-</div>
+         {%endcomment%}
+
