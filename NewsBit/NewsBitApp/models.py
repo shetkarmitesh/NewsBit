@@ -67,7 +67,11 @@ class Author(models.Model):
     last_name = models.CharField(max_length=100)
     description = models.CharField(max_length=250)
     description1 = RichTextUploadingField(null=True,blank=True)
-
+    def post_count(self):
+        count = news.author_post_count(self)  
+        return count
+    def author_name(self):
+        return self.first_name +" "+self.last_name
     def __str__(self) :
         return f'{self.first_name + " "+self.last_name}'
 
@@ -110,6 +114,9 @@ class news (models.Model):
         return f'{self.headline}'
     def tags_list(self):
         return [self.tags]
+    def author_post_count(self):
+        count = news.objects.all().filter(author_id = self.id)
+        return len(count)
 
 class Comment(models.Model):
     post = models.ForeignKey('news', on_delete=models.CASCADE, related_name='comments')

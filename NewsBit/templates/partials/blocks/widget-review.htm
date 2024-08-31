@@ -5,15 +5,21 @@
     </h3>
     <div class="post-list-block">
         <div class=" review-post-list">
+
+            <!-- for looop started -->
+             {%for item in top_authors%}
             <div class="top-author">
-                <img src="images/news/author-01.jpg" alt="author-thumb">
+                <img src="{{item.img.url}}" alt="author-thumb">
                 <div class="info">
-                    <h4 class="name"><a href="author.html">Jack Rockshow</a></h4>
+                    <h4 class="name"><a href="{% url 'author' item.id %}">{{item.author_name}}</a></h4>
                     <ul class="list-unstyled">
-                        <li>37 Posts</li>
+                        <li>{{item.post_count}} Posts</li>
                     </ul>
                 </div>
             </div>
+            {%endfor%}
+
+            {%comment%}
             <div class="top-author">
                 <img src="images/news/author-02.jpg" alt="author-thumb">
                 <div class="info">
@@ -41,6 +47,8 @@
                     </ul>
                 </div>
             </div>
+
+            {%endcomment%}
         </div>
     </div>
 </div>

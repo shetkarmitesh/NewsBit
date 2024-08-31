@@ -840,10 +840,26 @@ In for loop add if condition as if loop counter is divisibleby 2 => end item div
         </div>
 
 
+**************** latest articles ***************
+fetching the based on timeline 
+it required the pagination logic 
+so for right adding the slidebar
 
 
-
-
+******************* Top authors *********************
+for top authors we will required all authors nams ,images and news as posts 
+so for that i have created a def funtion post count in auhtors model 
+        def post_count(self):
+                count = news.author_post_count(self)  
+                return count
+ and passed the all the info about author as self 
+ and then call the news method which we have created as auhtor_post_count and passed parameter of authors info
+        def author_post_count(self):
+                count = news.objects.all().filter(author_id = self.id)
+                return len(count)
+    
+in this function using orm retrive all the data as per auhtor and apply len funtion to return posts count
+ display logic was simple just use for loop in widget-review.htm
 
 
 
@@ -863,8 +879,8 @@ i have idea to display like instagram like if anyone reply to child then display
 
 we have one problem as it display the first element again : tech section
 
-
-
+7.pag logic for latest artcile in index.html
+8.hot news ,tour ,game health
 
 , most recent ,hot news, beauty blog,tech, latest artcile ,top authors
 
