@@ -8,26 +8,33 @@ from django.db.models import Q
 # Create your views here.
 
 def index(request):
+    # first 4 news 
     new = news.objects.all()[:4] 
+    # editor section
     editor_choice_news = news.objects.all().filter(editor_choice=True)
+    # tech section
     # applying the length of 5 
     tech_cat = news.objects.all().filter(category_id =5)[:6]
+    # section beauty blog
     beauty_cat = news.objects.all().filter(Q(category_id =7 ) | Q(category_id=8 ) | Q(category_id=12 ) | Q(category_id=13))
+    # section latest article
     latest_article  = news.objects.all().order_by('-datetime')
-
-
+    # top authors
     top_authors = Author.objects.all()
-    # print(top_authors[0].post_count(0))
-    # m1,m2,m3,m4 = Integer.Min_value
+
     post =  []
     for i in top_authors:
         post.append(i)
     post.sort(reverse=True,key = lambda i : i.post_count())
-    # for i in post[:4]:
-    #     print(i)
-    #     if i.post_count()>
-    # print(len(latest_article),latest_article[0].headline,latest_article[17].get_time())
-    return render(request,'index.html',{'news':new,'editor_choice_news':editor_choice_news,'tech_cat':tech_cat,'beauty_cat':beauty_cat,'latest_article':latest_article,'top_authors':post[:4]})
+   
+    # Tour ,Game ,Health
+    tour_cat = news.objects.all().filter(category_id =10)[:4]
+    health_cat = news.objects.all().filter(category_id =9)[:4]
+    game_cat = news.objects.all().filter(category_id =2)[:4]
+
+    print(len(tour_cat))
+    context = {'news':new,'editor_choice_news':editor_choice_news,'tech_cat':tech_cat,'beauty_cat':beauty_cat,'latest_article':latest_article,'top_authors':post[:4],'tour_cat':tour_cat,'health_cat':health_cat,'game_cat':game_cat}
+    return render(request,'index.html',context)
 
 
 def index2(request):

@@ -26,7 +26,7 @@ class Category(models.Model):
     name_color = models.CharField(max_length=50,choices=color_choices,default="primary")
 
     def __str__(self):
-        return f'{self.name}'
+        return f'{self.id} {self.name}' 
 
 # class Tag(models.Model):
 #     class tagType (models.TextChoices):
@@ -123,7 +123,8 @@ class news (models.Model):
         count = news.objects.all().filter(author_id = self.id)
         
         return len(count)
-    
+    def comments_count(self):
+        return Comment.comment_count(self)
 
 class Comment(models.Model):
     post = models.ForeignKey('news', on_delete=models.CASCADE, related_name='comments')
@@ -143,5 +144,8 @@ class Comment(models.Model):
     def get_time(self):
         return humanize.naturaltime(self.created_at)
 
+    def comment_count(self):
+        comments = Comment.objects.all().filter(post_id=self.id)
 
-# class Editor
+        return len(comments)
+
