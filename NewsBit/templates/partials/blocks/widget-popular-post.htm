@@ -3,41 +3,44 @@
     <h3 class="news-title">
         <span>Hot News</span>
     </h3>
-
+    {%for item in hot_news %}
+    {% if forloop.counter == 1%}
     <div class="post-overlay-wrapper">
         <div class="post-thumbnail">
-            <img class="img-fluid" src="{% static 'images/news/news-15.jpg'%}" alt="post-thumbnail"/>
+            <img class="img-fluid" src="{{item.img.url}}" alt="post-thumbnail"/>
         </div>
         <div class="post-content">
-            <a class="post-category white" href="{% url 'post-category-1'%}">Fashion</a>
+            <a class="post-category white" href="{% url 'post-category' item.category_id %}">{{item.category_name}}</a>
             <h2 class="post-title">
-                <a href="{% url 'single-post' 1 %}">First Look At Self-Portrait's Autumn Collection...</a>
+                <a href="{% url 'single-post' item.id %}">{{item.headline}}</a>
             </h2>
             <div class="post-meta white">
-                <span class="posted-time"><i class="fa fa-clock-o mr-1"></i>17 jun,2019</span>
+                <span class="posted-time"><i class="fa fa-clock-o mr-1"></i>{{item.get_time}}</span>
                 <span> by </span>
                 <span class="post-author">
-                    <a href="{% url 'author' 1 %}">Jammy Anderson</a>
+                    <a href="{% url 'author' 1 %}">{{item.author_name}}</a>
                 </span>
             </div>
         </div>
     </div>
+    {% else %}
     <div class="post-list-block">
         <div class="post-block-wrapper post-float ">
             <div class="post-thumbnail">
-                <a href="{% url 'single-post' 1 %}">
-                    <img class="img-fluid" src="{% static 'images/news/news-03.jpg'%}" alt="post-thumbnail"/>
+                <a href="{% url 'single-post' item.id %}">
+                    <img class="img-fluid" src="{{item.img.url}}" alt="post-thumbnail"/>
                 </a>
             </div>
             <div class="post-content">
                 <h2 class="post-title title-sm">
-                    <a href="{% url 'single-post' 1 %}">Apple HomePod review: locked in</a>
+                    <a href="{% url 'single-post' item.id %}">{{item.headline}}</a>
                 </h2>
                 <div class="post-meta">
-                    <span class="posted-time"><i class="fa fa-clock-o mr-1"></i>2 hours ago</span>
+                    <span class="posted-time"><i class="fa fa-clock-o mr-1"></i>{{item.get_time}}</span>
                 </div>
             </div>
         </div>
+        {%comment%}
         <div class="post-block-wrapper post-float">
             <div class="post-thumbnail">
                 <a href="{% url 'single-post' 1 %}">
@@ -85,5 +88,8 @@
                 </div>
             </div>
         </div>
+        {%endcomment%}
     </div>
+    {% endif %}
+    {% endfor %}
 </div>

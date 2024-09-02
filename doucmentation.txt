@@ -874,10 +874,10 @@ key used to do Comparion is based on this function.
  lambda function is a small anonymous function
 
 
-********************* Tour Game Health ***************
+********************* Tour Game Health Hot News ***************
 
 
-
+done
 
 ************************Tasks ***********************
 1.i want the slider for tags with multiple tags selection : done 
@@ -899,4 +899,4 @@ we have one problem as it display the first element again : tech section
 
 , most recent ,hot news, beauty blog,tech, latest artcile ,top authors
 
-
+9.single post next previous news  section and related posts section

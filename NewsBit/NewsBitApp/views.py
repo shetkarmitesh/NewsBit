@@ -11,14 +11,19 @@ def index(request):
     # first 4 news 
     new = news.objects.all()[:4] 
     # editor section
+
     editor_choice_news = news.objects.all().filter(editor_choice=True)
     # tech section
     # applying the length of 5 
+
     tech_cat = news.objects.all().filter(category_id =5)[:6]
     # section beauty blog
+
     beauty_cat = news.objects.all().filter(Q(category_id =7 ) | Q(category_id=8 ) | Q(category_id=12 ) | Q(category_id=13))
+
     # section latest article
     latest_article  = news.objects.all().order_by('-datetime')
+
     # top authors
     top_authors = Author.objects.all()
 
@@ -32,8 +37,17 @@ def index(request):
     health_cat = news.objects.all().filter(category_id =9)[:4]
     game_cat = news.objects.all().filter(category_id =2)[:4]
 
+    # hot news section
+
+    hot_news = news.objects.all()
+    hot_posts = []
+    for i in hot_news:
+        hot_posts.append(i)
+        print(i.headline,i.comments_count())
+    hot_posts.sort(reverse=True,key = lambda i: i.comments_count())
+
     print(len(tour_cat))
-    context = {'news':new,'editor_choice_news':editor_choice_news,'tech_cat':tech_cat,'beauty_cat':beauty_cat,'latest_article':latest_article,'top_authors':post[:4],'tour_cat':tour_cat,'health_cat':health_cat,'game_cat':game_cat}
+    context = {'news':new,'editor_choice_news':editor_choice_news,'tech_cat':tech_cat,'beauty_cat':beauty_cat,'latest_article':latest_article,'top_authors':post[:4],'tour_cat':tour_cat,'health_cat':health_cat,'game_cat':game_cat,'hot_news':hot_posts[:5]}
     return render(request,'index.html',context)
 
 
