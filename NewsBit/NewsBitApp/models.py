@@ -116,7 +116,7 @@ class news (models.Model):
         return self.category.name_color
     
     def __str__(self) :
-        return f'{self.headline}'
+        return f'{self.id} {self.headline}'
     def tags_list(self):
         return [self.tags]
     def author_post(self):

@@ -9,7 +9,7 @@ from django.db.models import Q
 
 def index(request):
     # first 4 news 
-    new = news.objects.all()[:4] 
+    new = news.objects.all() 
     # editor section
 
     editor_choice_news = news.objects.all().filter(editor_choice=True)
@@ -140,16 +140,61 @@ def logout(request):
 
 
 def single_post(request,newsId):
+   
     new = news.objects.get(id=newsId)
-    # print(new.headline,len(new.tags.all()))
-    # for i in new.tags.all():
-    #     print(i.id)
     parentComments = Comment.objects.all().filter(post_id = new.id,parent_comment_id=None)
     subComments = Comment.objects.all().filter(post_id = new.id).filter(~Q(parent_comment_id=None)).order_by('parent_comment_id')
     # print(len(subComments),"p0000000000000000000000000")
     # for i in subComments :
     #     print(i.author_id,i.author_name())
-    return render(request,'single-post.html',{'news':new,'parentComments':parentComments,'subComments':subComments})
+
+    context = {'news':new,'parentComments':parentComments,'subComments':subComments}
+    # i=1
+    # while(i<=len(news.objects.all())):
+    #     if (news.objects.filter(id = newsId-i).exists()):
+    #         previous_news = news.objects.get(id = newsId-i)
+    #         # print("aaaaaaaaaaaaaaaaaaa")
+    #         context["previous_news"]= previous_news
+    #         break
+        
+    #     i=i+1 
+
+
+    # i=1
+    # while(i<=len(news.objects.all())):
+    #     if (news.objects.filter(id = newsId+i).exists()): 
+    #         next_news = news.objects.get(id = newsId+i)
+    #         context["next_news"]=next_news
+    #         # print("aaaaaaaaaaaaaaaaaaaaaaaaa")
+    #         break
+
+    #     i=i+1
+
+    # second logic 
+    all_news_id = news.objects.all().values_list('id',flat=True).order_by('id')
+    listNewsId = list(all_news_id)
+    indexFromList = listNewsId.index(newsId)
+    # for i in all_news_id:
+    #     print(i)
+    # ind = ids.index(2)
+    # print("aaaaaaaaaaaaaaaaaaaaaaaaaaa")
+    # print(ids[ind+1])
+    # print(ids[ind])
+    # print(ids[ind-1])
+    if (news.objects.filter(id = listNewsId[indexFromList-1]).exists()):
+            previous_news = news.objects.get(id = listNewsId[indexFromList-1])
+            context["previous_news"]= previous_news
+    try :
+        if (news.objects.filter(id = listNewsId[indexFromList+1]).exists()): 
+                next_news = news.objects.get(id = listNewsId[indexFromList+1])
+                context["next_news"]=next_news
+    except IndexError:
+         if (news.objects.filter(id = listNewsId[0]).exists()): 
+                next_news = news.objects.get(id = listNewsId[0])
+                context["next_news"]=next_news
+    # for i in context :
+    #     print (i) 
+    return render(request,'single-post.html',context)
 
 def postComment(request):
     if request.method =="POST":

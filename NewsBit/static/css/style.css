@@ -1372,7 +1372,7 @@ a.post-category.absolute {
 }
 
 .post-navigation {
-  display: inline-block;
+  /* display: inline-block; */
   padding: 30px 20px;
   background: #f0f1f4;
   border-radius: 2px;

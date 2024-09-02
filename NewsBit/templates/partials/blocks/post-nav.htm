@@ -1,20 +1,59 @@
 {% load static %}
+
 <nav class="post-navigation clearfix">
+    {%comment%}
+    <!-- use this logic when your using the loop to find next or previous posts -->
+    <!-- {% if previous_news %}
     <div class="previous-post">
-        <a href="{% url 'single-post' news.id %}">
-            <h6 class="text-uppercase">Next</h6>
+        <a href="{% url 'single-post' previous_news.id %}">
+            <h6 class="text-uppercase">Previous</h6>
             <h3>
-                 Intel’s new smart glasses actually look good
-            </h3>
+            {{previous_news.headline}} 
+        </h3>
         </a>
     </div>
     <div class="next-post">
-        <a href="{% url 'single-post' news.id %}">
-            <h6 class="text-uppercase">Previous</h6>
+    {%else%}
+    <div class="previous-post">
+
+    {%endif%}                            
+  
+        {% if next_news %}
+
+        <a href="{% url 'single-post' next_news.id %}">
+            <h6 class="text-uppercase">Next</h6>
 
             <h3>
-                 Free Two-Hour Delivery From Whole Foods
+                 {{next_news.headline}} 
             </h3>
         </a>
+        
+        {%endif%}
+    </div> -->
+    {%endcomment%}
+    {% if previous_news %}
+        <div class="previous-post">
+            <a href="{% url 'single-post' previous_news.id %}">
+                <h6 class="text-uppercase">Previous</h6>
+                <h3>
+                {{previous_news.headline}} 
+            </h3>
+            </a>
+        </div>
+        
+    {%endif%}                            
+        
+    {% if next_news %}
+        <div class="next-post">
+
+        <a href="{% url 'single-post' next_news.id %}">
+            <h6 class="text-uppercase">Next</h6>
+
+            <h3>
+                 {{next_news.headline}} 
+            </h3>
+        </a>
+        
+        {%endif%}
     </div>
 </nav>

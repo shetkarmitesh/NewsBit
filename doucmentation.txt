@@ -875,9 +875,59 @@ key used to do Comparion is based on this function.
 
 
 ********************* Tour Game Health Hot News ***************
+9.single post next previous news  section and related posts section : these are news according to news sr of entered in news table we can pass the news id of previous news and next id of next news : done 
+ done by creating a logic first of all take the news_id check if previous news ie news_id-1 and next news news_id+1 exists if exists the get the data and store it in the context which we will pass while rendering 
+
+ we are using if exists because it prevent error if news not exists at id 
+
+ then we encounters new error what id id is not in order like ids 1,2,3,5,8 like ids missing the we are not able to check previous or next headline to overcome this we can used loop i am using while loop because we have to run loop till the next id which has news or till end 
+
+ then in the post-nav we encounter displaying error or unattractive nature so for that first of all check if previous posts exist if yes then start with  executing div statement of next post then check if next post exists 
+  else part of previous if previous posts not exist then start with previous div and mention the content of next posts  which sees better than previous logic of frontend
+    and we have comment the css property of display content for class post-navigation because if any post not it not well to see the 
 
 
 done
+
+issue:
+ we have encounter the new worst case for the above logic where i have used the loop to find the next or previous post which may cause when post id is high or like 10 digits or unique characters id 
+ sol:
+ to resolve above issue we can first of all get all the ids from the table and store it list 
+
+    all_news_id = news.objects.all().values_list('id',flat=True).order_by('id') 
+
+ where values_list help to skip keys and flat true help retrieve a single value from each row of the queryset instead of a tuple.( to remove the ,)  
+
+ but stil cause error to find index based on all_news_id because its type is queryset so convert it to list
+    ids = list(all_news_id)
+get the index by pasing the requested newsid 
+    ind = ids.index(newsId)
+
+now get the previous and next news details 
+ if (news.objects.filter(id = listNewsId[indexFromList-1]).exists()):
+            previous_news = news.objects.get(id = listNewsId[indexFromList-1])
+            context["previous_news"]= previous_news
+if (news.objects.filter(id = listNewsId[indexFromList+1]).exists()): 
+                next_news = news.objects.get(id = listNewsId[indexFromList+1])
+                context["next_news"]=next_news
+
+but here we encounter an error when we reach to the end of list program search for next posts by len(list)+1 which cause error as list range out of range to handled this we have used the try except concept 
+when this error cause we passed the index 0 manually in except block
+if (news.objects.filter(id = listNewsId[indexFromList-1]).exists()):
+            previous_news = news.objects.get(id = listNewsId[indexFromList-1])
+            context["previous_news"]= previous_news
+    try :
+        if (news.objects.filter(id = listNewsId[indexFromList+1]).exists()): 
+                next_news = news.objects.get(id = listNewsId[indexFromList+1])
+                context["next_news"]=next_news
+    except IndexError:
+         if (news.objects.filter(id = listNewsId[0]).exists()): 
+                next_news = news.objects.get(id = listNewsId[0])
+                context["next_news"]=next_news
+
+by using this logic we can create loop which will never ending for post for previous and next
+
+
 
 ************************Tasks ***********************
 1.i want the slider for tags with multiple tags selection : done 
@@ -886,6 +936,7 @@ done
 5 create model for editor picks where pass the news and editor can select 6-8 post from all posted news :done
 sections required : done by adding an boolean field in news
 6. slidebar logic for post by category : done
+9.single post next previous news  section and related posts section : these are news according to news sr of entered in news table we can pass the news id of previous news and next id of next news : done 
 
 
 user profile management: done half 
@@ -899,4 +950,5 @@ we have one problem as it display the first element again : tech section
 
 , most recent ,hot news, beauty blog,tech, latest artcile ,top authors
 
-9.single post next previous news  section and related posts section
+
+10. change the first static four news to multiple with slidder or changing according to the time
