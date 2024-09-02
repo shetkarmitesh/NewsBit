@@ -861,6 +861,21 @@ so for that i have created a def funtion post count in auhtors model
 in this function using orm retrive all the data as per auhtor and apply len funtion to return posts count
  display logic was simple just use for loop in widget-review.htm
 
+we are going to change thr logic where i want post feild in author table which will store the count of posts
+for that we want to assign count of posts in news model by 
+
+above logic is also not suitable so back to original logic of fetching post count using function 
+so we have initialize a list as posts and creted for loop to insert auhtors info to list thrn sort the list by postcount()
+here we learn about sort() parameters sort () takes two parameter such as reverse true /false and second is key function 
+so while sorting reverse true for sort according to descending order of postcount() 
+key function where we have creaded a lambda funtion for postcount to order by postcount()
+key used to do Comparion is based on this function.  
+
+ lambda function is a small anonymous function
+
+
+********************* Tour Game Health ***************
+
 
 
 

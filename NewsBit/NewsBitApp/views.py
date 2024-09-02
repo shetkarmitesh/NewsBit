@@ -14,12 +14,20 @@ def index(request):
     tech_cat = news.objects.all().filter(category_id =5)[:6]
     beauty_cat = news.objects.all().filter(Q(category_id =7 ) | Q(category_id=8 ) | Q(category_id=12 ) | Q(category_id=13))
     latest_article  = news.objects.all().order_by('-datetime')
+
+
     top_authors = Author.objects.all()
     # print(top_authors[0].post_count(0))
-    # for i in top_authors:
-    #     print(i.id,i.first_name,i.post_count())
+    # m1,m2,m3,m4 = Integer.Min_value
+    post =  []
+    for i in top_authors:
+        post.append(i)
+    post.sort(reverse=True,key = lambda i : i.post_count())
+    # for i in post[:4]:
+    #     print(i)
+    #     if i.post_count()>
     # print(len(latest_article),latest_article[0].headline,latest_article[17].get_time())
-    return render(request,'index.html',{'news':new,'editor_choice_news':editor_choice_news,'tech_cat':tech_cat,'beauty_cat':beauty_cat,'latest_article':latest_article,'top_authors':top_authors})
+    return render(request,'index.html',{'news':new,'editor_choice_news':editor_choice_news,'tech_cat':tech_cat,'beauty_cat':beauty_cat,'latest_article':latest_article,'top_authors':post[:4]})
 
 
 def index2(request):
