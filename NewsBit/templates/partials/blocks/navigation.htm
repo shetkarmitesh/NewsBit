@@ -137,17 +137,31 @@
                            
                              <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                  Post
+                                  Categories
                                 </a>
                                 <div class="dropdown-menu" >
-                                <a class="dropdown-item"   href="{% url 'post-left-sidebar'%}">Post Left Sidebar</a>
-                                  <a class="dropdown-item" href="{% url 'post-full-width'%}">Post Full Width</a>
-                                  <a class="dropdown-item" href="{% url 'single-post' 1 %}">Single Post</a>
-                                  <a class="dropdown-item" href="{% url 'post-category-1'%}">Category 1</a>
-                                  <a class="dropdown-item" href="{% url 'post-category' 1 %}">Category 2</a>
-                                  {%comment%}
-                                    <a class="dropdown-item" href="{% url 'author'%}">Author</a>
+                                    {% for item in categories_list %}
+                                    <a class="dropdown-item" href="{% url 'post-category' item.id %}">{{item.name}}</a>
+                                    {% endfor %}
+
+                                    {%comment%}
+                                    <a class="dropdown-item"   href="{% url 'post-left-sidebar'%}">Post Left Sidebar</a>
+                                      <a class="dropdown-item" href="{% url 'post-full-width'%}">Post Full Width</a>
+                                      <a class="dropdown-item" href="{% url 'single-post' 1 %}">Single Post</a>
+                                      <a class="dropdown-item" href="{% url 'post-category-1'%}">Category 1</a>
                                   {%endcomment%}
+                                </div>
+                            </li>
+                             <li class="nav-item dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                  Authors
+                                </a>
+                                <div class="dropdown-menu" >
+                                    {% for item in authors_list %}
+
+                                        <a class="dropdown-item" href="{% url 'author' item.id %}">{{item.author_name}}</a>
+                                    {% endfor %}
+                                    
                                 </div>
                             </li>
                             {%comment%}
@@ -175,15 +189,6 @@
                                   <a class="dropdown-item" href="{% url 'job'%}">Career</a>
                                 </div>
                             </li>
-                             <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                  Pages
-                                </a>
-                                <div class="dropdown-menu" >
-                                  <a class="dropdown-item" href="{% url '404'%}">404 Page</a>
-                                  <a class="dropdown-item" href="{% url 'search'%}">Search Page</a>
-                                </div>
-                            </li>
 
                              <li class="nav-item">
                                 <a class="nav-link" href="{% url 'contact'%}">Contact</a>
@@ -209,7 +214,6 @@
                                     <span>
                                         <strong> Hi {{request.user.first_name}}!</strong>
                                     </span>
-                                    <a class="dropdown-item" href="{% url 'search'%}">Search Page</a>
                                     <a class="dropdown-item" href="{% url 'logout'%}">Logout</a>
                                     </div>
                                 </li>

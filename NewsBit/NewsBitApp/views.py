@@ -6,7 +6,6 @@ from django.contrib import messages
 from django.db.models import Q
 
 # Create your views here.
-
 def index(request):
     # first 4 news 
     new = news.objects.all() 
@@ -25,10 +24,10 @@ def index(request):
     latest_article  = news.objects.all().order_by('-datetime')
 
     # top authors
-    top_authors = Author.objects.all()
+    authors_list = Author.objects.all()
 
     post =  []
-    for i in top_authors:
+    for i in authors_list:
         post.append(i)
     post.sort(reverse=True,key = lambda i : i.post_count())
    
@@ -47,37 +46,53 @@ def index(request):
     hot_posts.sort(reverse=True,key = lambda i: i.comments_count())
 
     print(len(tour_cat))
-    context = {'news':new,'editor_choice_news':editor_choice_news,'tech_cat':tech_cat,'beauty_cat':beauty_cat,'latest_article':latest_article,'top_authors':post[:4],'tour_cat':tour_cat,'health_cat':health_cat,'game_cat':game_cat,'hot_news':hot_posts[:5]}
+
+    # nav section of categories and authors
+    categories_list = Category.objects.all()
+    # authors_list  object created alredy
+
+
+    context = {'news':new,'categories_list':categories_list,'authors_list':authors_list,'editor_choice_news':editor_choice_news,'tech_cat':tech_cat,'beauty_cat':beauty_cat,'latest_article':latest_article,'top_authors':post[:4],'tour_cat':tour_cat,'health_cat':health_cat,'game_cat':game_cat,'hot_news':hot_posts[:5]}
+
     return render(request,'index.html',context)
 
 
 def index2(request):
-    return render(request,'index.html')
+    authors_list = Author.objects.all()
+    categories_list = Category.objects.all()
+    return render(request,'index.html',{'authors_list':authors_list,'categories_list':categories_list})
 
 def about(request):
-    return render(request,'about.html')
-def account(request):
-    return render(request,'index.html')
+    authors_list = Author.objects.all()
+    categories_list = Category.objects.all()
+    return render(request,'about.html',{'authors_list':authors_list,'categories_list':categories_list})
 
 def author(request,author_id):
     author_details = Author.objects.get(id=author_id)
     # print(author_details.id,author_details.first_name,"asdaaaasdadadadsa")
     news_details = news.objects.all().filter(author_id = author_details.id)
-    return render(request,'author.html',{'author_detail':author_details,"news":news_details})
+    authors_list = Author.objects.all()
+    categories_list = Category.objects.all()
+    return render(request,'author.html',{'author_detail':author_details,"news":news_details,'authors_list':authors_list,'categories_list':categories_list})
 
 def contact(request):
-    return render(request,'index.html')
+    authors_list = Author.objects.all()
+    categories_list = Category.objects.all()
+
+    return render(request,'index.html',{'authors_list':authors_list,'categories_list':categories_list})
 def job_info(request):
     return render(request,'index.html')
 def job(request):
     return render(request,'index.html')
 def privacy(request):
-    return render(request,'index.html')
+    authors_list = Author.objects.all()
+    categories_list = Category.objects.all()
+    return render(request,'index.html',{'authors_list':authors_list,'categories_list':categories_list})
 def search(request):
     return render(request,'index.html')
 
 def term(request):
-    return render(request,'index.html')
+    return render(request,'index.html',{'authors_list':authors_list,'categories_list':categories_list})
 
 def search(request):
     return render(request,'index.html')
@@ -147,8 +162,12 @@ def single_post(request,newsId):
     # print(len(subComments),"p0000000000000000000000000")
     # for i in subComments :
     #     print(i.author_id,i.author_name())
+    authors_list = Author.objects.all()
+    categories_list = Category.objects.all()
+    context = {'news':new,'parentComments':parentComments,'subComments':subComments,'authors_list':authors_list,'categories_list':categories_list}
 
-    context = {'news':new,'parentComments':parentComments,'subComments':subComments}
+    # previous and next post logic 
+
     # i=1
     # while(i<=len(news.objects.all())):
     #     if (news.objects.filter(id = newsId-i).exists()):
@@ -194,9 +213,20 @@ def single_post(request,newsId):
                 context["next_news"]=next_news
     # for i in context :
     #     print (i) 
+
+    #  related posts logic
+    tag_list = new.tags.all()
+    # for i in tag_list:
+    #     print(i.id)
+    related_posts = news.objects.all().filter(category_id__in = tag_list)
+    print(len(related_posts))
+    for i in related_posts:
+        print(i)
+    context['related_posts']=related_posts
     return render(request,'single-post.html',context)
 
 def postComment(request):
+    
     if request.method =="POST":
         
         
@@ -219,5 +249,8 @@ def postComment(request):
 def post_category(request,category_id):
     news_details = news.objects.all().filter(tags = category_id)
     title = Category.objects.get(id =category_id)
+    authors_list = Author.objects.all()
+    categories_list = Category.objects.all()
+
     
-    return render(request,'post-category-2.html',{'news':news_details,'title':title})
+    return render(request,'post-category-2.html',{'news':news_details,'categories_list':categories_list,'authors_list':authors_list,'title':title})

@@ -875,6 +875,10 @@ key used to do Comparion is based on this function.
 
 
 ********************* Tour Game Health Hot News ***************
+
+done 
+
+********************* Logic for previous and next post in single-post page *********************************
 9.single post next previous news  section and related posts section : these are news according to news sr of entered in news table we can pass the news id of previous news and next id of next news : done 
  done by creating a logic first of all take the news_id check if previous news ie news_id-1 and next news news_id+1 exists if exists the get the data and store it in the context which we will pass while rendering 
 
@@ -927,6 +931,25 @@ if (news.objects.filter(id = listNewsId[indexFromList-1]).exists()):
 
 by using this logic we can create loop which will never ending for post for previous and next
 
+************** Related Posts *******************
+for related posts section can we the tag to display the posts whic means we will fetch the data for related tags
+fetch the all mention tag for the posts :
+     tag_list = new.tags.all()
+
+created new object that will store the all the objects which above tag list
+    related_posts = news.objects.all().filter(category_id__in = tag_list)
+
+while creating above logic we failed to fetch data with multiple id to tags so from chatgpt we found id__in id__in is a type of lookup that allows you to filter querysets based on whether a model’s field matches any value in a provided list. The __in lookup is used to specify that the field value should be within a list of values.
+When you use __in, you're asking Django's ORM (Object-Relational Mapping) to generate an SQL IN clause. This allows you to filter records where a field’s value matches any value in a given list or iterable.
+
+done
+
+
+
+
+
+
+
 
 
 ************************Tasks ***********************
@@ -936,19 +959,22 @@ by using this logic we can create loop which will never ending for post for prev
 5 create model for editor picks where pass the news and editor can select 6-8 post from all posted news :done
 sections required : done by adding an boolean field in news
 6. slidebar logic for post by category : done
+8.hot news ,tour ,game health : done
 9.single post next previous news  section and related posts section : these are news according to news sr of entered in news table we can pass the news id of previous news and next id of next news : done 
+11 most recent ,hot news, beauty blog,tech, latest artcile ,top authors : done
+12we have one problem as it display the first element again : tech section : solve we just have to apply  else condition paste the remaining div for small dic which dont have headlines etc :done
 
 
 user profile management: done half 
 3 above error in comment like parents reply done but anyone reply to child does not shows on page
 i have idea to display like instagram like if anyone reply to child then display it there only
 
-we have one problem as it display the first element again : tech section
 
 7.pag logic for latest artcile in index.html
-8.hot news ,tour ,game health
-
-, most recent ,hot news, beauty blog,tech, latest artcile ,top authors
-
 
 10. change the first static four news to multiple with slidder or changing according to the time
+13.categories page and navbar
+
+14 trending news in index.html navigation.htm based on the views 
+15 search button use
+16 navbar should be fixed

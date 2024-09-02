@@ -115,17 +115,17 @@ class news (models.Model):
     def category_color(self):
         return self.category.name_color
     
-    def __str__(self) :
-        return f'{self.id} {self.headline}'
-    def tags_list(self):
-        return [self.tags]
+    # def tags_list(self):
+    #     return [self.tags]
+    
     def author_post(self):
         count = news.objects.all().filter(author_id = self.id)
-        
         return len(count)
     def comments_count(self):
         return Comment.comment_count(self)
 
+    def __str__(self) :
+        return f'{self.id} {self.headline}'
 class Comment(models.Model):
     post = models.ForeignKey('news', on_delete=models.CASCADE, related_name='comments')
     author = models.ForeignKey(Author, on_delete=models.CASCADE)

@@ -4,23 +4,29 @@
         <span>Related Posts</span>
     </h3>
     <div class="news-style-two-slide">
+        <!-- loop start -->
+         {% for item in related_posts %}
         <div class="item">
             <div class="post-block-wrapper clearfix">
                 <div class="post-thumbnail mb-0">
-                    <a href="{% url 'single-post' news.id %}">
-                        <img class="img-fluid" src="{% static 'images/news/news-04.jpg'%}" alt="post-thumbnail"/>
+                    <a href="{% url 'single-post' item.id %}">
+                        <img class="img-fluid" src="{{item.img.url}}" alt="post-thumbnail"/>
                     </a>
                 </div>
-                <a class="post-category" href="{% url 'post-category-1'%}">Tech</a>
+                <a class="post-category" href="{% url 'post-category' item.category_id%}">{{item.category_name}}</a>
                 <div class="post-content">
                     <h2 class="post-title title-sm">
-                        <a href="{% url 'single-post' news.id %}">Intel’s new smart glasses actually look good</a>
+                        <a href="{% url 'single-post' item.id %}">{{item.headline}}</a>
                     </h2>
-                  
                      
                 </div>
             </div>
         </div>
+
+        {% endfor %}
+        <!-- loop end -->
+
+        {%comment%}
         <div class="item">
             <div class="post-block-wrapper clearfix">
                 <div class="post-thumbnail mb-0">
@@ -69,5 +75,7 @@
                 </div>
             </div>
         </div>
+        {%endcomment%}
+
     </div>
 </div>
