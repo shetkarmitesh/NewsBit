@@ -24,14 +24,13 @@ urlpatterns = [
     path('index-2', views.index2,name="index-2"),
     path('about', views.about,name="about"),
     # path('account', views.account,name="account"),
-    path('author/<int:author_id>/', views.author,name="author"),
     path('contact', views.contact,name="contact"),
     path('job-info', views.job_info,name="job-info"),
     path('job', views.job,name="job"),
     path('privacy', views.privacy,name="privacy"),
     path('search', views.search,name="search"),
-    path('post-category-1', views.post_category_1,name="post-category-1"),
-    path('post-category/<int:category_id>', views.post_category,name="post-category"),
+    path('post-author/<str:authors_name>', views.post_author,name="post-author"),
+    path('post-news/<str:news_details>', views.post_news,name="post-news"),
     path('post-full-width', views.post_full_width,name="post-full-width"),
     path('post-left-sidebar', views.post_left_sidebar,name="post-left-sidebar"),
     path('signup', views.signup,name="signup"),
@@ -42,4 +41,13 @@ urlpatterns = [
     path('404', views.m404,name="404"),
     # path('single-post/<int:news_id>/postComment', views.postComment,name="postComment"),
     path('postComment', views.postComment,name="postComment"),
+    path('search', views.search,name="search"),
+
+    path('author/<int:author_id>/', views.author,name="author"),
+    path('author/<int:author_id>/<int:newsId>/', views.author_posts,name="author_posts"),
+
+    path('post-category/<int:category_id>', views.post_category,name="post-category"),
+    path('post-category-1/<str:category_name>', views.post_category_1,name="post-category-1"),
+    path('post-category/<int:category_id>/<int:newsId>/', views.category_posts,name="category_posts"),
+
 ]

@@ -2,7 +2,7 @@
 {% include "partials/blocks/top-nav.htm" %}
 {% include "partials/blocks/trending-bar-dark.htm" %}
 {% include "partials/blocks/navigation.htm" %}
-{% include "partials/blocks/breadcrumb.htm" with titles='' %} 
+{% include "partials/blocks/breadcrumb.htm" with titles='Authors' %} 
 
 <!-- @@include('header.htm')
 
@@ -22,14 +22,14 @@
 			<div class="col-lg-8 col-md-12 col-sm-12 col-xs-12">
 				<div class="block category-listing category-style2">
 					<h3 class="news-title"><span>
-						{%if title%}
-						{{title}}
+						{%if title.name%}
+						{{title.name}}
 						{%else%}
 						<i class='font-weight-normal'>Showing results for&nbsp;</i> {{search}}
 						{%endif%}
 					</span></h3>
 					<!-- @@include('blocks/post-style-six.htm') -->
-				{% include "partials/blocks/post-style-six.htm" %}
+					{% include "partials/blocks/post-style-seven.htm" %}
 
 				</div>
 				<!-- @@include('blocks/pagination.htm') -->

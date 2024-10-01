@@ -5,14 +5,17 @@
     <div class="col-md-6 col-sm-6">
         <div class="post-block-wrapper post-grid-view clearfix">
             <div class="post-thumbnail">
-                <a href="{% url 'single-post' item.id %}">
                     <img class="img-fluid" src="{{item.img.url}}" alt="post-thumbnail"/>
                 </a>
             </div>
             <div class="post-content">
                 <a class="post-category" href="{% url 'post-category' item.category_id %}">{{item.category_name}}</a>
                 <h2 class="post-title mt-3">
-                    <a href="{% url 'single-post' item.id %}">{{item.headline}}</a>
+                    {%comment%}
+                    <!-- <a href="{% url 'single-post' item.id %}">{{item.headline}}</a> -->
+                    {%endcomment%}
+
+                    <a href="{% url 'author_posts' item.author_id item.id %}">{{item.headline}}</a>
                 </h2>
                 <div class="post-meta">
                     <span class="posted-time">{{item.get_time}}</span>

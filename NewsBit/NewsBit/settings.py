@@ -47,7 +47,7 @@ INSTALLED_APPS = [
     'ckeditor',
     'ckeditor_uploader',
     # 'django_ckeditor_5',
-    'taggit',
+    # 'taggit',
 
 ]
 
@@ -150,6 +150,7 @@ STATIC_ROOT = os.path.join(BASE_DIR,'assets')
 # storing the images here in media folder 
 
 MEDIA_ROOT = os.path.join(BASE_DIR,'media')
+AUTH_USER_MODEL = 'NewsBitApp.CustomUser'
  
 
 # # # ck editor 5 custom paltet config

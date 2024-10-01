@@ -1,16 +1,21 @@
-@@include('header.htm')
+<!-- @@include('header.htm') -->
+{% include 'partials/header.htm' %} 
 
-@@include('blocks/top-nav.htm')
+<!-- @@include('blocks/top-nav.htm') -->
+{% include 'partials/blocks/top-nav.htm' %} 
 
-@@include('blocks/trending-bar-dark.htm')
+<!-- @@include('blocks/trending-bar-dark.htm') -->
+{% include 'partials/blocks/trending-bar-dark.htm' %} 
 
-@@include('blocks/navigation.htm')
+<!-- @@include('blocks/navigation.htm') -->
+{% include 'partials/blocks/navigation.htm' %} 
 
-@@include('blocks/breadcrumb.htm', {
+<!-- @@include('blocks/breadcrumb.htm', {
 	"title"	:	"Terms & Conditions"
-})
-@@include('blocks/terms.htm')
+}) -->
+<!-- @@include('blocks/terms.htm') -->
 
-@@include('blocks/footer.htm')
-
-@@include('footer.htm')
+{% include 'partials/blocks/terms.htm' with title='Terms & Conditions' %} 
+{% include 'partials/blocks/terms.htm' %} 
+{% include 'partials/blocks/footer.htm' %} 
+{% include 'partials/footer.htm' %} 

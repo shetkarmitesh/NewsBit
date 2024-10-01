@@ -7,10 +7,10 @@
         <li>
             {%for comment in parentComments%}
             <div class="comment">
-                <img class="commented-person" alt="" src="{{comment.author_img.url}}">
+                <img class="commented-person" alt="" src="{{comment.user.img.url}}">
                 <div class="comment-body">
                     <div class="meta-data">
-                        <span class="commented-person-name" >{{comment.author_name}} </span>
+                        <span class="commented-person-name" >{{comment.user.first_name}}{{comment.user.last_name}} </span>
                         <span class="comment-hour d-block"><i class="fa fa-clock-o mr-2"></i>{{comment.get_time}}</span>
                     </div>
                     <div class="comment-content">
@@ -27,8 +27,9 @@
                                 <form action="/postComment" method="post">
                                     {% csrf_token %}
                                     <input type="hidden" name="news_id" value="{{news.id}}" id="comment_id">
-                                    <input type="hidden" name="author_id" value="{{news.author_id}}" id="comment_id">
+                                    <input type="hidden" name="user_id" value="{{request.user.id}}" id="comment_id">
                                     <input type="hidden" name="parentComment_id" value="{{comment.id}}" id="comment_id">
+                                    <input type="hidden" name="sub_parentComment_id" value="" id="comment_id">
                                     <div class="form-group">
                                         <label for="comment">Post a reply </label>
                                         <input type="text" class="form-control" name="content" placeholder="Enter comment here">
@@ -38,53 +39,56 @@
                             </div>
                         </div>
 
+                    </div>
                 </div>
-               </div>
             </div>
-           
-            {%for subcomment in subComments %}
-                {% if subcomment.parent_comment_id == comment.id %}
-                <ul class="comments-reply">
-                    <li>
-                        <div class="comment">
-                            <img class="commented-person" alt="" src="{{subcomment.author_img.url}}">
-                            <div class="comment-body">
-                                <div class="meta-data">
-                                    <span class="commented-person-name">{{subcomment.author_name}}</span>
-                                    <span class="comment-hour d-block"><i class="fa fa-clock-o mr-2"></i>{{subcomment.get_time}}</span>
-                                </div>
-                                <div class="comment-content">
-                                    <p>
-                                        {{subcomment.content}}
-                                    </p>
-                                </div>
-                                <div class="text-left">
-                                    <a class="comment-reply" data-toggle="collapse" data-target="#collapseExample{{subcomment.id}}" aria-expanded="false" aria-controls="collapseExample{{subcomment.id}}" ><i class="fa fa-reply"></i> Reply</a>
-                       
-                                    <div class="collapse" id="collapseExample{{subcomment.id}}">
-                                        <div class="card card-body">
-                                            <form action="/postComment" method="post">
-                                                {% csrf_token %}
-                                                <input type="hidden" name="news_id" value="{{news.id}}" id="comment_id">
-                                                <input type="hidden" name="author_id" value="{{news.author_id}}" id="comment_id">
-                                                <input type="hidden" name="parentComment_id" value="{{subcomment.id}}" id="comment_id">
-                                                <div class="form-group">
-                                                    <label for="comment">Post a reply </label>
-                                                    <input type="text" class="form-control" name="content" placeholder="Enter comment here">
-                                                    <button type="submit" class="btn btn-light">Submit</button>
-                                                </div>
-                                            </form>
+            
+        {%for subcomment in subComments  %}
+        {% if subcomment.parent_comment_id == comment.id or subcomment.sub_parent_comment_id == comment.id %}
+        <ul class="comments-reply">
+            
+            <li>
+                            <div class="comment">
+                                <img class="commented-person" alt="" src="{{subcomment.user.img.url}}">
+                                <div class="comment-body">
+                                    <div class="meta-data">
+                                        <span class="commented-person-name"> {{subcomment.user.first_name}}{{subcomment.user.last_name}} </span>
+                                        <span class="comment-hour d-block"><i class="fa fa-clock-o mr-2"></i>{{subcomment.get_time}}</span>
+                                    </div>
+                                    <div class="comment-content">
+                                        <p>
+                                            {{subcomment.content}}
+                                        </p>
+                                    </div>
+                                    <div class="text-left">
+                                        <a class="comment-reply" data-toggle="collapse" data-target="#collapseExample{{subcomment.id}}" aria-expanded="false" aria-controls="collapseExample{{subcomment.id}}" ><i class="fa fa-reply"></i> Reply</a>
+                                        
+                                        <div class="collapse" id="collapseExample{{subcomment.id}}">
+                                            <div class="card card-body">
+                                                <form action="/postComment" method="post">
+                                                    {% csrf_token %}
+                                                    <input type="hidden" name="news_id" value="{{news.id}}" id="comment_id">
+                                                    <input type="hidden" name="user_id" value="{{request.user.id}}" id="comment_id">
+                                                    <input type="hidden" name="parentComment_id" value="{{subcomment.id}}" id="comment_id">
+                                                    <input type="hidden" name="sub_parentComment_id" value="{{comment.id}}" id="comment_id">
+                                                    <div class="form-group">
+                                                        <label for="comment">Post a reply </label>
+                                                        <input type="text" class="form-control" name="content" placeholder="Enter comment here">
+                                                        <button type="submit" class="btn btn-light">Submit</button>
+                                                    </div>
+                                                </form>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </li>
-                </ul>
-                {% endif %}
-
-            {%endfor%}
-          
+                        </li>
+                    </ul>
+                    
+                    {% endif %}
+                    
+                    {%endfor%}
+                
             {%endfor%}
            
         </li>
@@ -107,8 +111,10 @@
                 <div class="form-group">
                     <input class="form-control" name="author_name"  id="name" placeholder="Name" type="text" value="{{news.author_name}} " required>
                     <input class="form-control" name="news_id"  placeholder="Name" type="hidden"  value="{{news.id}}">
-                    <input class="form-control" name="author_id"  placeholder="Name" type="hidden"  value="{{news.author_id}}">
+                    <input class="form-control" name="user_id"  placeholder="Name" type="hidden"  value="{{request.user.id}}">
                     <input class="form-control" name="parentComment_id"  placeholder="Name" type="hidden"  value="">
+                    <input type="hidden" name="sub_parentComment_id" value="" id="comment_id">
+
                 </div>
             </div>
             <div class="col-md-4">

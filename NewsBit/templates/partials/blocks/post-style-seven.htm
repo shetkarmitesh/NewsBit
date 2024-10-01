@@ -1,36 +1,37 @@
 {% load static %}
 <!-- loop will start -->
- {%for item in news%}
+{%for item in post_author%}
 <div class="post-block-wrapper post-list-view clearfix">
     
     <div class="row">
         <div class="col-md-5 col-sm-6">
             <div class="post-thumbnail thumb-float-style">
-                <a href= "{% url 'category_posts' item.category_id item.id %}" >
-                    <img class="img-fluid" src="{{item.img.url}}" alt="" />
+                <a href= "{% url 'author' item.id %}" >
+                    <img class="img-fluid" src="{{item.img.url}}" style="height: 50% ; width:50%; " alt="" />
                 </a>
             </div>
         </div>
         <div class="col-md-7 col-sm-6">
             <div class="post-content">
                  <div class="post-meta">
-                    <span>
+                    <!-- <span>
                         <i class="fa fa-clock-o"></i>
-                         <span class="posted-time">{{item.get_time}}</span>
-
-                    </span>
+                        <a href="{% url 'single-post' item.id %}">{{item.get_time}}</a>
+                    </span> -->
                    
-                      <span class="post-author">
-                        <a href="{% url 'author' item.author_id %}" class="text-dark">by {{item.author_name}}</a>
-                    </span>
+                      <!-- <span class="post-author">
+                        <a href="{% url 'author' item.id %}" class="text-dark">by {{item.author_name}}</a>
+                    </span> -->
                 </div>
                 <h2 class="post-title title-large ">
-                    <a href="{% url 'category_posts' item.category_id item.id %}">{{item.headline}}</a>
+                    <!-- <a href="{% url 'single-post' item.id %}">{{item.headline}}</a> -->
+                    <a href="{% url 'author' item.id %}" class="text-dark">{{item.author_name}}</a>
+
                 </h2>
                
                 
                 <p>
-                    {{item.short_description}}
+                    {{item.description}}
                 </p>
                 
             </div>

@@ -31,29 +31,87 @@
         {%endif%}
     </div> -->
     {%endcomment%}
-    {% if previous_news %}
-        <div class="previous-post">
-            <a href="{% url 'single-post' previous_news.id %}">
-                <h6 class="text-uppercase">Previous</h6>
+
+    <!-- nav for author post list  -->
+    {% if request.resolver_match.url_name == 'author_posts'%}
+    <!-- Display content for the author posts page -->
+        {% if previous_news %}
+            <div class="previous-post">
+                <a href="{% url 'author_posts' news.author_id previous_news.id %}">
+                    <h6 class="text-uppercase">Previous</h6>
+                        <h3>
+                            {{previous_news.headline}} 
+                        </h3>
+                    </a>
+            </div>
+            
+        {%endif%}                            
+            
+        {% if next_news %}
+            <div class="next-post">
+                
+                <a href="{% url 'author_posts' news.author_id next_news.id %}">
+                <h6 class="text-uppercase">Next</h6>
+                
                 <h3>
-                {{previous_news.headline}} 
-            </h3>
+                    {{next_news.headline}} 
+                </h3>
             </a>
-        </div>
-        
-    {%endif%}                            
-        
-    {% if next_news %}
-        <div class="next-post">
-
-        <a href="{% url 'single-post' next_news.id %}">
-            <h6 class="text-uppercase">Next</h6>
-
-            <h3>
-                 {{next_news.headline}} 
-            </h3>
-        </a>
-        
+            
         {%endif%}
-    </div>
+        </div>
+    {% elif request.resolver_match.url_name == 'category_posts'%}
+    <!-- Display content for the author posts page -->
+        {% if previous_news %}
+            <div class="previous-post">
+                <a href="{% url 'category_posts' news.category_id previous_news.id %}">
+                    <h6 class="text-uppercase">Previous</h6>
+                        <h3>
+                            {{previous_news.headline}} 
+                        </h3>
+                    </a>
+            </div>
+            
+        {%endif%}                            
+            
+        {% if next_news %}
+            <div class="next-post">
+                
+                <a href="{% url 'category_posts' news.category_id next_news.id %}">
+                <h6 class="text-uppercase">Next</h6>
+                
+                <h3>
+                    {{next_news.headline}} 
+                </h3>
+            </a>
+            
+        {%endif%}
+        </div>
+    {%else%}
+        {% if previous_news %}
+            <div class="previous-post">
+                <a href="{% url 'single-post' previous_news.id %}">
+                    <h6 class="text-uppercase">Previous</h6>
+                        <h3>
+                            {{previous_news.headline}} 
+                        </h3>
+                    </a>
+            </div>
+            
+            {%endif%}                            
+            
+            {% if next_news %}
+            <div class="next-post">
+                
+                <a href="{% url 'single-post' next_news.id %}">
+                <h6 class="text-uppercase">Next</h6>
+                
+                <h3>
+                    {{next_news.headline}} 
+                </h3>
+            </a>
+            
+            {%endif%}
+            </div>
+    {% endif %}    
 </nav>
